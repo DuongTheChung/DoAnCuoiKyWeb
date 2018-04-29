@@ -160,3 +160,12 @@
          </div>
          <!-- /.navbar-static-side -->
       </nav>
+      <div id="page-wrapper">
+      <%- messages('./common/messages', locals) %>
+      <% if(errors) {%>
+            <% errors.forEach(function(error) { %>
+                  <div class="alert alert-danger">
+                        <%= error.msg %>
+                  </div>
+           <% }); %>
+      <% } %>

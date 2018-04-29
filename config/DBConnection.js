@@ -1,10 +1,10 @@
 var mysql=require('mysql');
+
+//Database
 var connection=mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'123456',
-    database:'shoponline',
-    insecureAuth : true
- 
+    password:'',
+    database:'shoponline'
 });
 module.exports=connection;
