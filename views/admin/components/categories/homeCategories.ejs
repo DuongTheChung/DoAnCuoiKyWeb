@@ -1,0 +1,58 @@
+<% include ../../_layout/header %>
+
+<h2 class="page-title">Category</h2>
+<a href="/admin/category/add-category" class="btn btn-primary">Add new Category</a>
+<br><br>
+
+
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>MetaTitle</th>
+            <th>Created By</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% categories.forEach(function(cat) {%>
+        <tr>
+            <td><%= cat.name %></td>
+            <td><%= cat.meta_title %></td>
+            <td><%= cat.created_by %></td>
+            <td>
+                <a href="/admin/category/edit-category/<%= cat.id %>" class="btn btn-primary">Edit</a>
+                <a href="/admin/category/delete-category/<%= cat.id %>" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<!--Start Pagination-->
+<% if(pageCount > 1) { %>
+    <ul class="pagination">
+      <%
+      var y = 1;
+      if(currentPage>1) {
+        y = currentPage-1;
+        %>
+        <li> <a href="/admin/category/?page=<%= y %>">&laquo;</a> </li>
+      <% } %>
+      <%  for (y; y <= pageCount; y++) {
+        if(currentPage == y) { %>
+            <li class="active"><span><%= y %></span></li>
+        <% }else{ %>
+            <li><a href="/admin/category/?page=<%= y %>"><%= y %></a></li>
+        <% }
+          if(parseInt(currentPage) + 4 == y) {
+            break;
+          }
+      }  %>
+      <% if(currentPage != pageCount) { %>
+        <li> <a href="/admin/category/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+      <% } %>
+    </ul>
+<% } %>
+ 
+<% include ../../_layout/footer %>
