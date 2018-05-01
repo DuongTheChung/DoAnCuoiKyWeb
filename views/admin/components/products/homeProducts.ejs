@@ -1,0 +1,67 @@
+<% include ../../_layout/header %>
+
+<h2 class="page-title">Product</h2>
+<a href="/admin/product/add-product" class="btn btn-primary">Add new Product</a>
+<br><br>
+<% if(totalProducts >0 ) { %>
+
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>CompanyProduct</th>
+            <th>Product Image</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% products.forEach(function(product) {%>
+        <tr>
+            <td><%= product.name %></td>
+            <td>$<%= parseFloat(product.price).toFixed(2) %></td>
+            <td><%= product.parent_company  %></td>
+            <td><%= product.parent_category %></td>
+            <td>
+                <img id="imgPreview"  src="/admin/images/product_images/product<%= product.id %>/<%= product.image %>">
+            </td>
+            <td>
+                <a href="/admin/product/edit-product/<%= product.id %>" class="btn btn-primary">Edit</a>
+                <a href="/admin/product/delete-product/<%= product.id %>" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<!--Start Pagination-->
+<% if(pageCount > 1) { %>
+    <ul class="pagination">
+      <%
+      var y = 1;
+      if(currentPage>1) {
+        y = currentPage-1;
+        %>
+        <li> <a href="/admin/product/?page=<%= y %>">&laquo;</a> </li>
+      <% } %>
+      <%  for (y; y <= pageCount; y++) {
+        if(currentPage == y) { %>
+            <li class="active"><span><%= y %></span></li>
+        <% }else{ %>
+            <li><a href="/admin/product/?page=<%= y %>"><%= y %></a></li>
+        <% }
+          if(parseInt(currentPage) + 4 == y) {
+            break;
+          }
+      }  %>
+      <% if(currentPage != pageCount) { %>
+        <li> <a href="/admin/product/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+      <% } %>
+    </ul>
+<% } %>
+ 
+<% }else { %>
+    <h3 class="text-center">There are no Product</h3>
+<% } %>
+<% include ../../_layout/footer %>

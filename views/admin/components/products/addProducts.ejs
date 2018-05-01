@@ -1,0 +1,81 @@
+<% include ../../_layout/header %>
+<h1 class="page-title">Add a Product</h1>
+<a href="/admin/product" class="btn btn-primary">Back to Home</a>
+<br><br>
+
+<form action="/admin/product/add-product" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="">Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Name">      
+    </div>
+
+    <div class="form-group">
+        <label for="">Category</label>
+        <select name="category" class="form-control">
+            <% categories.forEach(function(cat) { %>
+                <option value="<%= cat.name %>"><%= cat.name %></option>
+            <% }); %>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="">CompanyProduct</label>
+        <select name="company_product" class="form-control">
+            <% companyProducts.forEach(function(comp) { %>
+                <option value="<%= comp.name %>"><%= comp.name %></option>
+            <% }); %>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="">Display order</label>
+        <input type="number" class="form-control" name="display_order"  placeholder="Display order">      
+    </div>
+
+    <div class="form-group">
+        <label for="">Description</label>
+        <textarea class="form-control" name="description" cols="30" rows="10" placeholder="Description"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="">Price</label>
+        <input type="text" name="price" class="form-control" placeholder="Price">
+    </div>
+
+    <div class="form-group">
+        <label for="">Quantity</label>
+        <input type="number" name="quantity" class="form-control" placeholder="Quantity">
+    </div>
+
+    <div class="form-group">
+        <label for="">Image</label>
+        <input type="file" name="image" class="form-control" id="img">
+        <img src="#" id="imgPreview" alt="img">
+    </div>
+
+    <div class="form-group">
+        <label for="">Created by</label>
+        <input type="text" class="form-control" name="created_by"  placeholder="Created by">      
+    </div>
+
+    <button class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+
+    function readURL(input){
+        if(input.files && input.files[0]){
+            var reader=new FileReader();
+            reader.onload=function(e){
+                $("#imgPreview").attr('src',e.target.result).width(100).height(100);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#img").change(function(){
+        readURL(this);
+    });
+</script>
+
+<% include ../../_layout/footer%>

@@ -1,0 +1,30 @@
+<% include ../../_layout/header %>
+<h1 class="page-title">Add a CompanyProduct</h1>
+<a href="/admin/companyproduct" class="btn btn-primary">Back to Home</a>
+<br><br>
+
+<form action="/admin/companyproduct/add-companyproduct" method="POST">
+    <div class="form-group">
+        <label for="">Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Name">      
+    </div>
+    <div class="form-group">
+        <label for="">Display order</label>
+        <input type="number" class="form-control" name="display_order"  placeholder="Display order">      
+    </div>
+    <div class="form-group">
+        <label for="">Email</label>
+        <input type="email" class="form-control" name="email" placeholder="Email">      
+    </div>
+    <div class="form-group">
+        <label for="">Phone</label>
+        <input type="number" class="form-control" name="phone"  placeholder="Phone">      
+    </div>
+    <div class="form-group">
+            <label for="">Created by</label>
+            <input type="text" class="form-control" name="created_by"  placeholder="Created by">      
+        </div>
+    <button class="btn btn-primary">Submit</button>
+</form>
+
+<% include ../../_layout/footer%>

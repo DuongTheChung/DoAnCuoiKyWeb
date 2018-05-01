@@ -1,0 +1,61 @@
+<% include ../../_layout/header %>
+
+<h2 class="page-title">Company Product</h2>
+<a href="/admin/companyproduct/add-companyproduct" class="btn btn-primary">Add new Companyproduct</a>
+<br><br>
+
+
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Metatitle</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Created by</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% CompanyProducts.forEach(function(com) {%>
+        <tr>
+            <td><%= com.name %></td>
+            <td><%= com.meta_title %></td>
+            <td><%= com.email %></td>
+            <td><%= com.phone %></td>
+            <td><%= com.created_by %></td>
+            <td>
+                <a href="/admin/companyproduct/edit-companyproduct/<%= com.id %>" class="btn btn-primary">Edit</a>
+                <a href="/admin/companyproduct/delete-companyproduct/<%= com.id %>" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<!--Start Pagination-->
+<% if(pageCount > 1) { %>
+    <ul class="pagination">
+      <%
+      var y = 1;
+      if(currentPage>1) {
+        y = currentPage-1;
+        %>
+        <li> <a href="/admin/companyproduct/?page=<%= y %>">&laquo;</a> </li>
+      <% } %>
+      <%  for (y; y <= pageCount; y++) {
+        if(currentPage == y) { %>
+            <li class="active"><span><%= y %></span></li>
+        <% }else{ %>
+            <li><a href="/admin/companyproduct/?page=<%= y %>"><%= y %></a></li>
+        <% }
+          if(parseInt(currentPage) + 4 == y) {
+            break;
+          }
+      }  %>
+      <% if(currentPage != pageCount) { %>
+        <li> <a href="/admin/companyproduct/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+      <% } %>
+    </ul>
+<% } %>
+ 
+<% include ../../_layout/footer %>
