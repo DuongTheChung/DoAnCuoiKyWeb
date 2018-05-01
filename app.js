@@ -3,7 +3,12 @@ var path=require('path');
 var bodyParser=require('body-parser');
 var session=require('express-session');
 var expressValidator=require('express-validator');
+var fileUpload=require('express-fileupload');
+var cookieParser = require('cookie-parser');
+var flash = require('connect-flash');
 var connection=require('./config/DBConnection');
+
+var sessionStore = new session.MemoryStore;
 
 //connect database
 connection.connect(function(err) {
@@ -12,7 +17,6 @@ connection.connect(function(err) {
 });
 //init app
 var app=express();
-
 
 
 //set path views
@@ -28,12 +32,18 @@ app.use(bodyParser.json())
 
 app.locals.errors=null;
 
+//File Upload
+
+app.use(fileUpload());
+
 //express session
+app.use(cookieParser('secret'));
 app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+    cookie: { maxAge: 60000 },
+    store: sessionStore,
+    saveUninitialized: true,
+    resave: 'true',
+    secret: 'secret'
 }));
 
 //express Validator
@@ -52,11 +62,30 @@ app.use(expressValidator({
       msg  :msg,
       value:value
     };
+  },
+
+  customValidators: {
+    isImage : function(value,filename){
+      var extension=(path.extname(filename)).toLowerCase();
+
+      switch(extension){
+        case '.jpg':
+          return '.jpg';
+        case '.jpeg':
+          return '.jpeg';
+        case '.png':
+          return '.png';
+        case '':
+          return false;
+        default:
+          return false;
+      }
+    }
   }
 }));
 
 //Express message
-app.use(require('connect-flash')());
+app.use(flash());
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
   next();
@@ -65,8 +94,13 @@ app.use(function (req, res, next) {
 //admin router
 var admin=require('./routes/admin/index');
 var categoriesAdmin=require('./routes/admin/categories');
+var companyProductAdmin=require('./routes/admin/companyProducts');
+var productsAdmin=require('./routes/admin/products');
 app.use('/admin',admin);
 app.use('/admin/category',categoriesAdmin);
+app.use('/admin/companyproduct',companyProductAdmin);
+app.use('/admin/product',productsAdmin);
+
 
 //client router
 var client=require('./routes/client/index');

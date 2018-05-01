@@ -4,8 +4,11 @@ var db=require('../config/DBConnection');
 //Categoty
 var Category={
 
-    getAllCategory : function(category,callback) {
-        return db.query("select * from category Limit ?,?",[category.offset,category.limit],callback);
+    getAllCategory : function(callback) {
+        return db.query("select * from category ",callback);
+    },
+    getAllCategoryPaging : function(category,callback) {
+        return db.query("select * from category order by display_order Limit ?,?",[category.offset,category.limit],callback);
     },
 
     categoryCount : function(callback) {

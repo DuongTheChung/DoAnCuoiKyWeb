@@ -16,7 +16,12 @@
     "express-validator": "~5.1.2",
     "express-messages": "~1.0.1",
     "connect-flash": "~0.1.1",
-    "node-datetime": "~2.0.6"
+    "node-datetime": "~2.0.6",
+    "express-fileupload": "~0.4.0",
+    "fs-extra": "~5.0.0",
+    "mkdirp": "~0.5.1",
+    "resize-img": "~1.1.2",
+    "cookie-parser": "~1.4.3"
   },
   "repository": {
     "type": "git",

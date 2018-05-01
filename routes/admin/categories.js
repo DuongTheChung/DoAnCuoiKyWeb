@@ -2,20 +2,24 @@ var express=require('express');
 var dateTime=require('node-datetime');
 var router=express.Router();
 
-var Categories=require('../../models/categories');
+var CategoriesModel=require('../../models/categories');
+var strHelper=require('../../helper/strReplace');
 
 //Pagination
 var totalCategory = 0;
-var pageSize = 2;
+var pageSize = 4;
 var pageCount = 0;
 var start = 0;
 var currentPage = 1;
 
-//GET category index
+//GET category home
 router.get('/',(req,res)=>{
-    Categories.categoryCount(function(err,categories) {
+    if(req.session.errors){
+        req.session.errors=null;
+    }
+    CategoriesModel.categoryCount(function(err,results) {
         if(err) throw err;
-        totalCategory =categories[0].count;
+        totalCategory =results[0].count;
         pageCount = Math.ceil(totalCategory/pageSize);
         if (typeof req.query.page !== 'undefined') {
           currentPage = req.query.page;
@@ -28,13 +32,13 @@ router.get('/',(req,res)=>{
             start=(currentPage - 1) * pageSize;
         }
     
-        Categories.getAllCategory({offset: start,limit : pageSize}, function(err,result){
+        CategoriesModel.getAllCategoryPaging({offset: start,limit : pageSize}, function(err,results){
           if(err){
             res.json(err);
           }else{
             res.render('admin/components/categories/homeCategories',{
                 title: 'Home Category',       
-                categories: result, 
+                categories: results, 
                 pageCount: pageCount, 
                 pageSize: pageSize, 
                 currentPage: currentPage
@@ -46,8 +50,15 @@ router.get('/',(req,res)=>{
 
 //GET category add
 router.get('/add-category',(req,res)=>{
+    var errors;
+    if(req.session.errors){
+        errors=req.session.errors;
+    }else{
+        req.session.errors=null;
+    }
     res.render('admin/components/categories/addCategories',{
-        title:'Add category'
+        title:'Add category',
+        errors:errors
     });
 });
 
@@ -57,7 +68,7 @@ router.post('/add-category',(req,res)=>{
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('created_by','Created by must has a value').notEmpty();
     var name=req.body.name;
-    var meta_title=name.replace(/\s+/g,'-').toLowerCase();
+    var meta_title=strHelper.myReplace(name);
     var display_order=parseInt(req.body.display_order,10);
     var dt = dateTime.create();
     var date = dt.format('Y-m-d H:M:S');
@@ -66,17 +77,13 @@ router.post('/add-category',(req,res)=>{
 
     var errors=req.validationErrors();
     if(errors){
-        res.render('admin/components/categories/addCategories',{
-            errors:errors,
-            title:'Add category'
-        });
+        req.session.errors=errors;
+        res.redirect('/admin/category/add-category');
     }else{
-        Categories.findCategoryByName(name,(err,categories)=>{
-            if(categories != ""){
+        CategoriesModel.findCategoryByName(name,(err,results)=>{
+            if(results != ""){
                 req.flash('danger','Category already exists');
-                res.render('admin/components/categories/addCategories',{
-                    title:'Add category'
-                });
+                res.redirect('/admin/category/add-category');
             }else{
                 var category={
                     "name":name,
@@ -86,32 +93,39 @@ router.post('/add-category',(req,res)=>{
                     "created_by":created_by
                 };
 
-                Categories.addCategory(category,(err,categories)=>{
+                CategoriesModel.addCategory(category,(err,result)=>{
                     if(err){
                         return console.log(err);
                     }else{
                         req.flash('success','Category added success');
                         res.redirect('/admin/category');
                     }
-
                 });
             }
         });
     }
 });
 
+
 //GET Category edit
 router.get('/edit-category/:id',(req,res)=>{
-    Categories.getCategoryById(req.params.id,(err,category)=>{
+    var errors;
+    if(req.session.errors){
+        errors=req.session.errors;
+    }else{
+        req.session.errors=null;
+    }
+    CategoriesModel.getCategoryById(req.params.id,(err,result)=>{
         if(err){
             return console.log(err);
         }else{
             res.render('admin/components/categories/editCategories',{
-                name:category[0].name,
-                display_order:category[0].display_order,
-                id:category[0].id,
-                modified_by:category[0].modified_by,
-                title:'Edit Category'
+                title:'Edit Category',
+                errors:errors,
+                name:result[0].name,
+                display_order:result[0].display_order,
+                id:result[0].id,
+                modified_by:result[0].modified_by
             });
         }
     });
@@ -124,7 +138,7 @@ router.post('/edit-category/:id',(req,res)=>{
     req.checkBody('modified_by','Modified by must has a value').notEmpty();
     var id=req.params.id;
     var name=req.body.name;
-    var meta_title=name.replace(/\s+/g,'-').toLowerCase();
+    var meta_title=strHelper.myReplace(name);
     var display_order=parseInt(req.body.display_order,10);
     var dt = dateTime.create();
     var date = dt.format('Y-m-d H:M:S');
@@ -133,25 +147,13 @@ router.post('/edit-category/:id',(req,res)=>{
     
     var errors=req.validationErrors();
     if(errors){
-        res.render('admin/components/categories/editCategories',{
-            errors:errors,
-            name:name,
-            display_order:display_order,
-            modified_by:modified_by,
-            id:id,
-            title:'Edit category'
-        });
+        req.session.errors=errors;
+        res.redirect('/admin/category/edit-category/'+id);
     }else{
-        Categories.findCategoryByMetatitle(meta_title,id,(err,categories)=>{
-            if(categories != ""){
+        CategoriesModel.findCategoryByMetatitle(meta_title,id,(err,results)=>{
+            if(results != ""){
                 req.flash('danger','Category already exists');
-                    res.render('admin/components/categories/editCategories',{
-                        name:name,
-                        display_order:display_order,
-                        modified_by:modified_by,
-                        id:id,
-                        title:'Edit category'
-                });
+                res.redirect('/admin/category/edit-category/'+id);
             }else{
                 var category={
                     "name":name,
@@ -161,7 +163,7 @@ router.post('/edit-category/:id',(req,res)=>{
                     "modified_by":modified_by
                 };
 
-                Categories.updateCategory(id,category,(err,categories)=>{
+                CategoriesModel.updateCategory(id,category,(err,result)=>{
                     if(err){
                         return console.log(err);
                     }else{
@@ -178,7 +180,7 @@ router.post('/edit-category/:id',(req,res)=>{
 
 //GET Delete category
 router.get('/delete-category/:id',(req,res)=>{
-    Categories.deleteCategory(req.params.id,(err,category)=>{
+    CategoriesModel.deleteCategory(req.params.id,(err,result)=>{
         if(err){
             return console.log(err);
         }else{
