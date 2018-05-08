@@ -30,7 +30,10 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+//varilable local
 app.locals.errors=null;
+app.locals.categories=null;
+app.locals.companyProducts=null;
 
 //File Upload
 
@@ -121,8 +124,29 @@ app.use('/single',singleClient);
 app.use('/account/login',loginClient);
 app.use('/account/register',registerClient);
 
-//set server
 
+//Load common 
+//Load header categories
+var CategoriesModel=require('./models/categories');
+CategoriesModel.getAllCategory((err,results)=>{
+  if(err){
+    return console.log(err);
+  }else{
+    app.locals.categories=results;
+  }
+});
+//Load header companyProduct
+var CompanyProductsModel=require('./models/companyProducts');
+CompanyProductsModel.getAllCompanyProduct((err,results)=>{
+  if(err){
+    return console.log(err);
+  }else{
+    app.locals.companyProducts=results;
+  }
+});
+
+
+//set server
 var port=3000;
 app.listen(port,()=>{
   console.log('Server started on port '+ port);

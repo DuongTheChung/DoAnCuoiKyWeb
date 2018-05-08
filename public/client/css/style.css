@@ -1,11 +1,6 @@
-/*Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
---*/
 @font-face {
-    font-family: 'OleoScript-Regular';
-    src:url(../fonts/OleoScript-Regular.ttf) format('truetype');
+    font-family: 'Roboto-Regular';
+    src:url(../fonts/Roboto-Regular.ttf) format('truetype');
 }
 @font-face {
     font-family: 'Roboto-Regular';
@@ -52,6 +47,7 @@ h1,h2,h3,h4,h5,h6,label,p{
 }
 .head-top {
   padding: 1em 0 0;
+  margin-left: 8em;
 }
 .number {
   margin-top: 1%;
@@ -70,16 +66,16 @@ h1,h2,h3,h4,h5,h6,label,p{
 	color:#000;
 	line-height: 1.8em;
 	margin-bottom: 4%;
-	  text-align: left;
+	text-align: center;
 }
 .h_nav h4.top{
 	margin-top:1%;
 }
 .h_nav ul li{
-	display: block;
+  display: block;
 }
 .h_nav ul li a{
-	  display: block;
+	display: block;
   font-size: 1em;
   color: #B0B0B0;
   text-transform: capitalize;
@@ -261,7 +257,7 @@ ul.callbacks_tabs.callbacks1_tabs {
 .content-top h1{
 	color:#000;
 	font-size: 3em;
-	font-family: 'OleoScript-Regular';
+	font-family: 'Montserrat', sans-serif;	
 	text-align: center;
 	margin: 0 0 1em;
 }
@@ -271,7 +267,7 @@ ul.callbacks_tabs.callbacks1_tabs {
 .col-md1 h3 {
   	font-size: 1.2em;
   	line-height: 1.1em;
-  	font-family: 'OleoScript-Regular';
+  	font-family: 'Montserrat', sans-serif;	
   	text-align: center;
   	margin: 0 0 0.7em;
   	color: #000;
@@ -305,6 +301,7 @@ ul.callbacks_tabs.callbacks1_tabs {
 .col-md1 {
   border: 1px solid #CACACA;
   padding: 1em;
+  margin-bottom:2em; 
   border-bottom:5px solid #52D0C4;
 }
 .col-md1:hover {
@@ -712,7 +709,7 @@ a.forgot {
 .products h1{
 	color:#000;
 	font-size: 3em;
-	font-family: 'OleoScript-Regular';
+	font-family: 'Montserrat', sans-serif;
 	text-align: center;
 	margin: 0 0 1em;
 }
@@ -1033,6 +1030,7 @@ ul.nav.nav-pills {
 .content-top h1 {
   font-size: 2.5em;
   margin: 0 0 0.3em;
+  font-family: 'Montserrat', sans-serif;	
 }	
 .content-top {
   padding: 3em 0;

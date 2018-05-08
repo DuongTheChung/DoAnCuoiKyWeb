@@ -5,9 +5,9 @@ ul.memenu.skyblue {text-align: center;}
 .memenu>li>a{font-family: 'Roboto-Regular';float:left;padding: 5px 30px 5px 30px;  font-size: 1.1em;text-decoration:none;transition:color .4s ease-in-out;-moz-transition:color .4s ease-in-out;-webkit-transition:color .4s ease-in-out;-o-transition:color .4s ease-in-out}
 .memenu>li>.mepanel {
 	position: absolute;
-	display: none;
+	display:none;
 	background: #fff;
-	width: 80%;
+	width: 50%;
 	top: 56px;
 	left: 10.7%;
 	z-index: 99;
@@ -51,7 +51,7 @@ ul.memenu.skyblue {text-align: center;}
 .mepanel .row .col1,.mepanel .row .col2,.mepanel .row .col3,.mepanel .row .col4,.mepanel .row .col5,.mepanel .row .col6{display:block;width:100%;min-height:20px;float:left;margin-left:2.127659574468085%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 .mepanel .row [class*="col"]:first-child{margin-left:0}
 .mepanel .row .col1 {
-  width: 31.91%;
+  width: 100%;
 }
 .mepanel .row .col2{width:31.914893617021278%}
 .mepanel .row .col3{width:48.93617021276595%}

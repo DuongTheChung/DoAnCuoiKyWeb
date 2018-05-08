@@ -163,7 +163,7 @@ router.post('/edit-companyproduct/:id',(req,res)=>{
         req.session.errors=errors;
         res.redirect('/admin/companyproduct/edit-companyproduct/'+id);
     }else{
-        CompanyProductsModel.findCompanyProductByMetatitle(meta_title,id,(err,results)=>{
+        CompanyProductsModel.findCompanyProductByMetatitleOtherId(meta_title,id,(err,results)=>{
             if(results != ""){
                 req.flash('danger','CompanyProduct already exists');
                 res.redirect('/admin/companyproduct/edit-companyproduct/'+id);

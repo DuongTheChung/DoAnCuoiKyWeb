@@ -150,7 +150,7 @@ router.post('/edit-category/:id',(req,res)=>{
         req.session.errors=errors;
         res.redirect('/admin/category/edit-category/'+id);
     }else{
-        CategoriesModel.findCategoryByMetatitle(meta_title,id,(err,results)=>{
+        CategoriesModel.findCategoryByMetatitleOtherId(meta_title,id,(err,results)=>{
             if(results != ""){
                 req.flash('danger','Category already exists');
                 res.redirect('/admin/category/edit-category/'+id);

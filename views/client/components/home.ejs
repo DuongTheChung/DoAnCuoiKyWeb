@@ -30,172 +30,96 @@
 <div class="content">
  <div class="container">
     <div class="content-top">
-       <h1>All Products</h1>
-       <div class="content-top1">
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image.png" alt="" />
-                </a>
-                <h3><a href="single.html">English book </a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
+        <div class="new">
+            <h1>News product</h1>
+            <div class="content-top1">
+                <% newProducts.forEach(function(product){ %>
+                    <div class="col-md-3 pro-1">
+                        <div class="col-m">
+                        <a href="/single/<%= product.meta_title %>" data-toggle="modal" data-target="#myModal17" class="offer-img">
+                        <img src="/admin/images/product_images/product<%= product.id %>/<%= product.image %>" class="img-responsive" alt="">
+                        </a>
+                        <div class="mid-1">
+                            <div class="women">
+                                <h6><a href="/single/<%= product.meta_title %>"><%= product.name %></a></h6>
+                            </div>
+                            <div class="mid-2">
+                                <p ><em class="item_price">$<%= product.price %></em></p>
+                                <div class="block">
+                                    <div class="starbox small ghosting"> </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="add add-2">
+                                <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1" data-summary="summary 1" data-price="6.00" data-quantity="1" data-image="images/of16.png">Add to Cart</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                <% }); %>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="best_sellers">
+            <h1>Best-selling product</h1>
+            <div class="content-top1">
+                    <% bestSellingProducts.forEach(function(product){ %>
+                        <div class="col-md-3 pro-1">
+                            <div class="col-m">
+                            <a href="/single/<%= product.meta_title %>" data-toggle="modal" data-target="#myModal17" class="offer-img">
+                            <img src="/admin/images/product_images/product<%= product.id %>/<%= product.image %>" class="img-responsive" alt="">
+                            </a>
+                            <div class="mid-1">
+                                <div class="women">
+                                    <h6><a href="/single/<%= product.meta_title %>"><%= product.name %></a></h6>
+                                </div>
+                                <div class="mid-2">
+                                    <p ><em class="item_price">$<%= product.price %></em></p>
+                                    <div class="block">
+                                        <div class="starbox small ghosting"> </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="add add-2">
+                                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1" data-summary="summary 1" data-price="6.00" data-quantity="1" data-image="images/of16.png">Add to Cart</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                    <div class="clearfix"> </div>
                 </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image1.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
+        </div>
+        <div class="top_views">
+            <h1>Top view product</h1>
+            <div class="content-top1">
+                    <% topViewProducts.forEach(function(product){ %>
+                        <div class="col-md-3 pro-1">
+                            <div class="col-m">
+                            <a href="/single/<%= product.meta_title %>" data-toggle="modal" data-target="#myModal17" class="offer-img">
+                            <img src="/admin/images/product_images/product<%= product.id %>/<%= product.image %>" class="img-responsive" alt="">
+                            </a>
+                            <div class="mid-1">
+                                <div class="women">
+                                    <h6><a href="/single/<%= product.meta_title %>"><%= product.name %></a></h6>
+                                </div>
+                                <div class="mid-2">
+                                    <p ><em class="item_price">$<%= product.price %></em></p>
+                                    <div class="block">
+                                        <div class="starbox small ghosting"> </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="add add-2">
+                                    <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1" data-summary="summary 1" data-price="6.00" data-quantity="1" data-image="images/of16.png">Add to Cart</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                    <div class="clearfix"> </div>
                 </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image2.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image3.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="clearfix"> </div>
-       </div>
-       <div class="content-top1">
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image4.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image5.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image6.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image7.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="clearfix"> </div>
-       </div>
-       <div class="content-top1">
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image4.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="single.html">
-                <img class="img-responsive" src="/client/images/image5.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="/single">
-                <img class="img-responsive" src="/client/images/image6.png" alt="" />
-                </a>
-                <h3><a href="/single">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="col-md-3 col-md2">
-             <div class="col-md1 simpleCart_shelfItem">
-                <a href="/single">
-                <img class="img-responsive" src="/client/images/image7.png" alt="" />
-                </a>
-                <h3><a href="single.html">Book</a></h3>
-                <div class="price">
-                   <h5 class="item_price">$300</h5>
-                   <a href="#" class="item_add">Add To Cart</a>
-                   <div class="clearfix"> </div>
-                </div>
-             </div>
-          </div>
-          <div class="clearfix"> </div>
-       </div>
+        </div>
     </div>
  </div>
 </div>

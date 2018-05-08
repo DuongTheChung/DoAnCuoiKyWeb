@@ -7,6 +7,7 @@ var Category={
     getAllCategory : function(callback) {
         return db.query("select * from category ",callback);
     },
+
     getAllCategoryPaging : function(category,callback) {
         return db.query("select * from category order by display_order Limit ?,?",[category.offset,category.limit],callback);
     },
@@ -23,7 +24,11 @@ var Category={
         return db.query("select* from category where name=?",[name],callback);
     },
 
-    findCategoryByMetatitle:function(meta_title,id,callback){
+    findCategoryByMetatitle:function(meta_title,callback){
+        return db.query("select * from category where meta_title=? ",[meta_title],callback);
+    },
+
+    findCategoryByMetatitleOtherId:function(meta_title,id,callback){
         return db.query("select * from category where meta_title=? and id != ?",[meta_title,id],callback);
     },
 

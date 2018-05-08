@@ -1,233 +1,79 @@
 <% include ../_layouts/header %>
 <div class="products">
-    <div class="container">
-       <h1>Products Best Sellers</h1>
-       <div class="col-md-9">
-          <div class="content-top1">
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
+   <div class="container">
+      <div class="col-md-12">
+            <div class="listProduct">
+                <h1><%= title_product %></h1>
+                <% if(totalProducts > 0) { %>
+                <%  products.forEach(function(p) { %>
+                <div class="col-md-3 pro-1">
+                    <div class="col-m">
+                    <a href="/single/<%= p.meta_title %>" data-toggle="modal" data-target="#myModal17" class="offer-img">
+                    <img src="/admin/images/product_images/product<%= p.id %>/<%= p.image %>" class="img-responsive" alt="">
+                    </a>
+                    <div class="mid-1">
+                        <div class="women">
+                            <h6><a href="/single/<%= p.meta_title %>"><%= p.name %></a></h6>
+                        </div>
+                        <div class="mid-2">
+                            <p ><em class="item_price">$<%= p.price %></em></p>
+                            <div class="block">
+                                <div class="starbox small ghosting"> </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="add add-2">
+                            <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="product 1" data-summary="summary 1" data-price="6.00" data-quantity="1" data-image="images/of16.png">Add to Cart</button>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-             </div>
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image1.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
-                </div>
-             </div>
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image2.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
-                </div>
-             </div>
-             <div class="clearfix"> </div>
-          </div>
-          <div class="content-top1">
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
-                </div>
-             </div>
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image1.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
-                </div>
-             </div>
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image2.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
-                </div>
-             </div>
-             <div class="clearfix"> </div>
-          </div>
-          <div class="content-top1">
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image3.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
-                </div>
-             </div>
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image4.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
-                </div>
-             </div>
-             <div class="col-md-4 col-md3">
-                <div class="col-md1 simpleCart_shelfItem">
-                   <a href="/single">
-                   <img class="img-responsive" src="/client/images/image5.png" alt="" />
-                   </a>
-                   <h3><a href="/single">Book</a></h3>
-                   <div class="price">
-                      <h5 class="item_price">$300</h5>
-                      <a href="#" class="item_add">Add To Cart</a>
-                      <div class="clearfix"> </div>
-                   </div>
-                </div>
-             </div>
-             <div class="clearfix"> </div>
-          </div>
-       </div>
-       <div class="col-md-3 product-bottom">
-          <!--categories-->
-          <div class=" rsidebar span_1_of_left">
-             <h3 class="cate">Categories</h3>
-             <ul class="menu-drop">
-                <li class="item1">
-                   <a href="#">Product </a>
-                   <ul class="cute">
-                      <li class="subitem1"><a href="/single">English </a></li>
-                      <li class="subitem2"><a href="/single">Novel </a></li>
-                      <li class="subitem3"><a href="/single">Picture</a></li>
-                      <li class="subitem3"><a href="/single">Comic</a></li>
-                   </ul>
-                </li>
-                <li class="item2">
-                   <a href="#">Producer </a>
-                   <ul class="cute">
-                      <li class="subitem1"><a href="/single">Ha noi </a></li>
-                      <li class="subitem2"><a href="/single">TPHCM</a></li>
-                      <li class="subitem3"><a href="/single">Da nang</a></li>
-                   </ul>
-                </li>
-                <li class="item3">
-                   <a href="#">Other</a>
-                   <ul class="cute">
-                      <li class="subitem1"><a href="/single">Top Views</a></li>
-                      <li class="subitem2"><a href="/single">Best Sales</a></li>
-                   </ul>
-                </li>
-             </ul>
-          </div>
-          <!--initiate accordion-->
-          <script type="text/javascript">
-             $(function() {
-                 var menu_ul = $('.menu-drop > li > ul'),
-                        menu_a  = $('.menu-drop > li > a');
-                 menu_ul.hide();
-                 menu_a.click(function(e) {
-                     e.preventDefault();
-                     if(!$(this).hasClass('active')) {
-                         menu_a.removeClass('active');
-                         menu_ul.filter(':visible').slideUp('normal');
-                         $(this).addClass('active').next().stop(true,true).slideDown('normal');
-                     } else {
-                         $(this).removeClass('active');
-                         $(this).next().stop(true,true).slideUp('normal');
-                     }
-                 });
-             
-             });
-          </script>
-          <!--//menu-->
-          <!--seller-->
-          <div class="product-bottom">
-             <h3 class="cate">Best Sellers</h3>
-             <div class="product-go">
-                <div class=" fashion-grid">
-                   <a href="/single"><img class="img-responsive " src="/client/images/image1.png" alt=""></a>	
-                </div>
-                <div class=" fashion-grid1">
-                   <h6 class="best2"><a href="/single" >Lorem ipsum dolor sitamet consectetuer  </a></h6>
-                   <span class=" price-in1"> $40.00</span>
-                </div>
-                <div class="clearfix"> </div>
-             </div>
-             <div class="product-go">
-                <div class=" fashion-grid">
-                   <a href="/single"><img class="img-responsive " src="/client/images/image2.png" alt=""></a>	
-                </div>
-                <div class=" fashion-grid1">
-                   <h6 class="best2"><a href="/single" >Lorem ipsum dolor sitamet consectetuer  </a></h6>
-                   <span class=" price-in1"> $40.00</span>
-                </div>
-                <div class="clearfix"> </div>
-             </div>
-             <div class="product-go">
-                <div class=" fashion-grid">
-                   <a href="/single"><img class="img-responsive " src="/client/images/image3.png" alt=""></a>	
-                </div>
-                <div class=" fashion-grid1">
-                   <h6 class="best2"><a href="/single" >Lorem ipsum dolor sitamet consectetuer  </a></h6>
-                   <span class=" price-in1"> $40.00</span>
-                </div>
-                <div class="clearfix"> </div>
-             </div>
-             <div class="product-go">
-                <div class=" fashion-grid">
-                   <a href="/single"><img class="img-responsive " src="/client/images/image4.png" alt=""></a>	
-                </div>
-                <div class=" fashion-grid1">
-                   <h6 class="best2"><a href="/single" >Lorem ipsum dolor sitamet consectetuer  </a></h6>
-                   <span class=" price-in1"> $40.00</span>
-                </div>
-                <div class="clearfix"> </div>
-             </div>
-          </div>
-       </div>
-       <div class="clearfix"> </div>
-    </div>
- </div>
+                <% }) %>
+                <% }else{  %>
+                    <h3 class="text-center">There are no Product</h3>
+               <% } %>
+            </div>
+            <div class="clearfix"></div>
+            <div class="page" style="float: left;">
+                <% if(pageCount > 1) { %>
+                        <ul class="pagination">
+                          <%
+                          var y = 1;
+                          if(currentPage>1) {
+                            y = currentPage-1;
+                            %>
+
+                            <% if(meta_title=='all-product') { %>
+                                <li> <a href="/products/?page=<%= y %>">&laquo;</a> </li>
+                            <% } else { %>
+                                <li> <a href="/products/<%= params %>/<%= meta_title %>/?page=<%= y %>">&laquo;</a> </li>
+                            <% } %>
+                          <% } %>
+                          <%  for (y; y <= pageCount; y++) {
+                            if(currentPage == y) { %>
+                                <li class="active"><span><%= y %></span></li>
+                            <% }else{ %>
+                                <% if(meta_title=='all-product') { %>
+                                    <li><a href="/products/?page=<%= y %>"><%= y %></a></li>
+                                <% } else { %>
+                                    <li><a href="/products/<%= params %>/<%= meta_title %>/?page=<%= y %>"><%= y %></a></li>
+                                <% } %>
+                            <% }
+                              if(parseInt(currentPage) + 4 == y) {
+                                break;
+                              }
+                          }  %>
+                          <% if(currentPage != pageCount) { %>
+                            <% if(meta_title=='all-product') { %>
+                                <li> <a href="/products/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+                            <% }else { %>
+                                <li> <a href="/products/<%= params %>/<%= meta_title %>/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+                            <% } %>
+                          <% } %>
+                        </ul>
+                <% } %>
+            </div>     
+      </div>
+   </div>
+</div>
 <% include ../_layouts/footer %>

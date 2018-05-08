@@ -23,7 +23,11 @@ var CompanyProducts={
         return db.query("select* from company where name=?",[name],callback);
     },
 
-    findCompanyProductByMetatitle:function(meta_title,id,callback){
+    findCompanyProductByMetatitle:function(meta_title,callback){
+        return db.query("select * from company where meta_title=?",[meta_title],callback);
+    },
+
+    findCompanyProductByMetatitleOtherId:function(meta_title,id,callback){
         return db.query("select * from company where meta_title=? and id != ?",[meta_title,id],callback);
     },
 
