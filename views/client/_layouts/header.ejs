@@ -49,18 +49,23 @@
                </div>
                <div class="col-sm-4 header-left">
                   <p class="log"><a href="account.html"  >Login</a>
-                     <span>|</span><a  href="register.html"  >Signup</a>
-                  </p>
+                    <span>|</span><a  href="register.html"  >Signup</a>
+                 </p>
                   <div class="cart box_1">
-                     <a href="checkout.html">
+                     <a href="/cart/checkout">
                         <h3>
-                           <div class="total">
-                              <span class="simpleCart_total"></span>
-                           </div>
                            <img src="/client/images/cart.png" alt=""/>
                         </h3>
                      </a>
-                     <p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
+                     <p>
+                        <a href="/cart/checkout" class="simpleCart_empty">
+                            <% if(typeof cart !== "undefined") {%>
+                              <%= cart.length %>
+                            <% }else{ %>
+                              0
+                            <% } %>
+                        </a>
+                    </p>
                   </div>
                   <div class="clearfix"> </div>
                </div>

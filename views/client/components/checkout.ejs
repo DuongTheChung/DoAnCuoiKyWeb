@@ -2,54 +2,60 @@
 <div class="container">
 	<div class="check-out">
 		<h1>Checkout</h1>
-    	    <table >
-		  <tr>
-			<th>Item</th>
-			<th>Qty</th>		
-			<th>Prices</th>
-			<th>Delery Detials</th>
-			<th>Subtotal</th>
-		  </tr>
-		  <tr>
-			<td class="ring-in"><a href="/single" class="at-in"><img src="/client/images/image1.png" class="img-responsive" alt=""></a>
-			<div class="sed">
-				<h5>Sed ut perspiciatis unde</h5>
-				<p>(At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium) </p>
-			
+			<% if(typeof cart !== "undefined") { %>
+					<table >
+					<tr>
+						<th>Item</th>
+						<th>Quantity</th>		
+						<th>Prices</th>
+						<th></th>
+						<th>Subtotal</th>
+					</tr>
+					<% var total=0; %>
+					<% cart.forEach(function(product) { %>
+					<% var sub= parseFloat(product.qty * product.price).toFixed(2); %>
+					<% total+= +sub; %>
+					<tr>
+						<td class="ring-in"><a href="/single/<%= product.meta_title %>" class="at-in">
+							<img src="<%= product.image %>" class="img-responsive" alt=""></a>
+						<div class="sed">
+							<h5><%= product.name %></h5>
+							<p>(<%= product.description %>) </p>
+						</div>
+						<div class="clearfix"> </div></td>
+						<td class="check"><%= product.qty %></td>		
+						<td>$<%= product.price %></td>
+						<td>
+								<a href="/cart/update/<%= product.meta_title %>?action=add" class="btn btn-primary">+</a>&nbsp;
+								<a href="/cart/update/<%= product.meta_title %>?action=remove" class="btn btn-danger">-</a>&nbsp;
+								<a href="/cart/update/<%= product.meta_title %>?action=clear" class="btn btn-default">Clear</a>&nbsp;
+						</td>
+						<td>$<%= sub %></td>
+					</tr>
+					<% }); %>
+					<tr>
+						<td colspan="5" align="right"><b>Total: </b>$<%= parseFloat(total).toFixed(2) %></td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">
+							<a class=" clearcart btn btn-danger" href="/cart/clear">Clear cart</a>
+						</td>
+					</tr>
+			</table>
+			<a href="#" class=" to-buy">BUY NOW</a>
+			<div class="clearfix"> </div>
+			<% }else{ %>
+				<h3 class="text-center">Your cart is empty</h3>
+			<% } %>
 			</div>
-			<div class="clearfix"> </div></td>
-			<td class="check"><input type="text" value="1" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='';}"></td>		
-			<td>$100.00</td>
-			<td>FREE SHIPPING</td>
-			<td>$100.00</td>
-		  </tr>
-		  <tr>
-		  <td class="ring-in"><a href="/single" class="at-in"><img src="/client/images/image2.png" class="img-responsive" alt=""></a>
-			<div class="sed">
-				<h5>Sed ut perspiciatis unde</h5>
-				<p>(At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium ) </p>
-			</div>
-			<div class="clearfix"> </div></td>
-			<td class="check"><input type="text" value="1" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='';}"></td>		
-			<td>$200.00</td>
-			<td>FREE SHIPPING</td>
-			<td>$200.00</td>
-		  </tr>
-		  <tr>
-		  <td class="ring-in"><a href="/single" class="at-in"><img src="/client/images/image3.png" class="img-responsive" alt=""></a>
-			<div class="sed">
-				<h5>Sed ut perspiciatis unde</h5>
-				<p>(At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium) </p>
-			</div>
-			<div class="clearfix"> </div></td>
-			<td class="check"><input type="text" value="1" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='';}"></td>		
-			<td>$150.00</td>
-			<td>FREE SHIPPING</td>
-			<td>$150.00</td>
-		  </tr>
-	</table>
-	<a href="#" class=" to-buy">PROCEED TO BUY</a>
-	<div class="clearfix"> </div>
-    </div>
-</div>
+		</div>
+	
+		<script>
+			$(function(){
+				$('a.clearcart').on('click',function(){
+					if(!confirm('Confirm clear cart'))
+						return false;
+				});
+			});
+		</script>
 <% include ../_layouts/footer %>

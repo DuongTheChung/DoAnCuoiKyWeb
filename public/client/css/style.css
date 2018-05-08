@@ -330,7 +330,7 @@ ul.callbacks_tabs.callbacks1_tabs {
 .top-footer1 h2 {
   font-size: 2em;
   color: #52d0c4;
-    font-family: 'OleoScript-Regular';
+    font-family: 'Roboto-Regular';
       margin: 0 0 0.5em;
 }
 .top-footer1 input[type="text"] {
@@ -368,7 +368,7 @@ ul.callbacks_tabs.callbacks1_tabs {
 	font-size: 1.1em;
 	color: #000;
 	margin: 0 0 0.5em;
-	  font-family: 'OleoScript-Regular';
+	  font-family: 'Roboto-Regular';
 }
 .footer-bottom-cate ul{
 	padding: 0;
@@ -420,7 +420,7 @@ p.footer-class a:hover{
 .contact h1{
 	font-size: 3em;
 	color: #000;
-  	font-family: 'OleoScript-Regular';
+  	font-family: 'Roboto-Regular';
 	margin: 0 0px 1em;
 	text-align: center;
 }
@@ -501,7 +501,7 @@ p.footer-class a:hover{
 	color:#000;
 	font-size:2em;
 	margin: 0 15px 0.7em;
-	  font-family: 'OleoScript-Regular';	
+	  font-family: 'Roboto-Regular';	
 }
 .address {
   padding: 3em 0 0;
@@ -518,13 +518,13 @@ p.footer-class a:hover{
 	color:#000;
 	font-size: 3em;
 	margin:0 0 1em;
-	font-family: 'OleoScript-Regular';
+	font-family: 'Roboto-Regular';
 	text-align: center;
 }
 .login-left h4{
 	color:#000;
 	font-size: 1.3em;
-	font-family: 'OleoScript-Regular';
+	font-family: 'Roboto-Regular';
 }
  .login-left p {
 	color: #b2b2b2;
@@ -597,7 +597,7 @@ a.forgot {
 	color:#000;
 	font-size:3em;
 	margin:0 0 1em;
-	  font-family: 'OleoScript-Regular';
+	  font-family: 'Roboto-Regular';
 	  text-align: center;
 }
 .register-top-grid span, .register-bottom-grid span {
@@ -720,7 +720,7 @@ a.forgot {
 h3.cate {
 	color: #52D0C4;
 	font-size: 1.5em;
-	  font-family: 'OleoScript-Regular';
+	  font-family: 'Roboto-Regular';
 }
 ul.kid-menu{
 	display: block !important;
@@ -831,7 +831,7 @@ span.price-in1 {
 	font-size:1.5em;
 	color:#52D0C4;
 	line-height:1.5em;
-	  font-family: 'OleoScript-Regular';
+	font-family: 'Roboto-Regular';
 }
 label.add-to{
 	display:block;
@@ -922,7 +922,7 @@ table{
 th{
 	color: #52D0C4;
   	font-size: 1.2em;
- 	font-family: 'OleoScript-Regular';
+ 	font-family: 'Roboto-Regular';
     font-weight: 400;	
 }
 th, td {
@@ -943,7 +943,7 @@ a.at-in {
 .sed h5{
      color: #52D0C4;
   	font-size: 1.1em;
-  	font-family: 'OleoScript-Regular';
+  	font-family: 'Roboto-Regular';
 }
 .sed p{
     color:#b2b2b2;
@@ -969,7 +969,7 @@ a.at-in {
 .check-out h1 {
     font-size: 3em;
   color: #000;
-  font-family: 'OleoScript-Regular';
+  font-family: 'Roboto-Regular';
   margin: 0 0px 1em;
   text-align: center;
 }
@@ -992,7 +992,7 @@ a.to-buy:hover{
 h1.typo1 {
     font-size: 3em;
   color: #000;
-  font-family: 'OleoScript-Regular';
+  font-family: 'Roboto-Regular';
   margin: 0 0px 1em;
   text-align: center;
 }

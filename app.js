@@ -94,6 +94,11 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get('*',(req,res,next)=>{
+  res.locals.cart=req.session.cart;
+  next();
+});
+
 //admin router
 var admin=require('./routes/admin/index');
 var categoriesAdmin=require('./routes/admin/categories');
@@ -110,7 +115,7 @@ var homeClient=require('./routes/client/home');
 var contactClient=require('./routes/client/contact');
 var productsClient=require('./routes/client/products');
 var aboutClient=require('./routes/client/about');
-var checkoutClient=require('./routes/client/checkout');
+var cartClient=require('./routes/client/cart');
 var singleClient=require('./routes/client/single');
 var loginClient=require('./routes/client/account/login');
 var registerClient=require('./routes/client/account/register');
@@ -119,7 +124,7 @@ app.use('/',homeClient);
 app.use('/contact',contactClient);
 app.use('/products',productsClient);
 app.use('/about',aboutClient);
-app.use('/checkout',checkoutClient);
+app.use('/cart',cartClient);
 app.use('/single',singleClient);
 app.use('/account/login',loginClient);
 app.use('/account/register',registerClient);
