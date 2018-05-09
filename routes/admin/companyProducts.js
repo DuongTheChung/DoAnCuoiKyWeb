@@ -5,6 +5,9 @@ var router=express.Router();
 var CompanyProductsModel=require('../../models/companyProducts');
 var strHelper=require('../../helper/strReplace');
 
+var auth=require('../../config/auth');
+var isAdmin=auth.isAdmin;
+
 //Pagination
 var totalCompanyProduct = 0;
 var pageSize = 4;
@@ -13,7 +16,7 @@ var start = 0;
 var currentPage = 1;
 
 //GET CompanyProduct Home
-router.get('/',(req,res)=>{
+router.get('/',isAdmin,(req,res)=>{
     if(req.session.errors){
         req.session.errors=null;
     }
@@ -51,7 +54,7 @@ router.get('/',(req,res)=>{
 
 
 //GET CompanyProduct add
-router.get('/add-companyproduct',(req,res)=>{
+router.get('/add-companyproduct',isAdmin,(req,res)=>{
     var errors;
     if(req.session.errors){
         errors=req.session.errors;
@@ -65,7 +68,7 @@ router.get('/add-companyproduct',(req,res)=>{
 });
 
 //POST CompanyProduct add
-router.post('/add-companyproduct',(req,res)=>{
+router.post('/add-companyproduct',isAdmin,(req,res)=>{
     req.checkBody('name','Name must has a value').notEmpty();
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('email','Email must has a value').notEmpty();
@@ -115,7 +118,7 @@ router.post('/add-companyproduct',(req,res)=>{
 });
 
 //GET CompanyProduct edit
-router.get('/edit-companyproduct/:id',(req,res)=>{
+router.get('/edit-companyproduct/:id',isAdmin,(req,res)=>{
     var errors;
     if(req.session.errors){
         errors=req.session.errors;
@@ -141,7 +144,7 @@ router.get('/edit-companyproduct/:id',(req,res)=>{
 });
 
 //POST CompanyProduct edit
-router.post('/edit-companyproduct/:id',(req,res)=>{
+router.post('/edit-companyproduct/:id',isAdmin,(req,res)=>{
     req.checkBody('name','Name must has a value').notEmpty();
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('email','Email must has a value').notEmpty();
@@ -194,7 +197,7 @@ router.post('/edit-companyproduct/:id',(req,res)=>{
 
 
 //GET Delete CompanyProduct
-router.get('/delete-companyproduct/:id',(req,res)=>{
+router.get('/delete-companyproduct/:id',isAdmin,(req,res)=>{
     CompanyProductsModel.deleteCompanyProduct(req.params.id,(err,result)=>{
         if(err){
             return console.log(err);

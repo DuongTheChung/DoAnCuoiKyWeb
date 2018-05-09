@@ -6,6 +6,7 @@ var expressValidator=require('express-validator');
 var fileUpload=require('express-fileupload');
 var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
+var passport=require('passport');
 var connection=require('./config/DBConnection');
 
 var sessionStore = new session.MemoryStore;
@@ -94,8 +95,15 @@ app.use(function (req, res, next) {
   next();
 });
 
+//Passport middleware
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.get('*',(req,res,next)=>{
   res.locals.cart=req.session.cart;
+  res.locals.user=req.user || null;
   next();
 });
 
@@ -117,8 +125,7 @@ var productsClient=require('./routes/client/products');
 var aboutClient=require('./routes/client/about');
 var cartClient=require('./routes/client/cart');
 var singleClient=require('./routes/client/single');
-var loginClient=require('./routes/client/account/login');
-var registerClient=require('./routes/client/account/register');
+var users=require('./routes/client/users');
 
 app.use('/',homeClient);
 app.use('/contact',contactClient);
@@ -126,9 +133,7 @@ app.use('/products',productsClient);
 app.use('/about',aboutClient);
 app.use('/cart',cartClient);
 app.use('/single',singleClient);
-app.use('/account/login',loginClient);
-app.use('/account/register',registerClient);
-
+app.use('/users',users);
 
 //Load common 
 //Load header categories

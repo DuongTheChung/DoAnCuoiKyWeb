@@ -4,6 +4,8 @@ var router=express.Router();
 
 var CategoriesModel=require('../../models/categories');
 var strHelper=require('../../helper/strReplace');
+var auth=require('../../config/auth');
+var isAdmin=auth.isAdmin;
 
 //Pagination
 var totalCategory = 0;
@@ -13,7 +15,7 @@ var start = 0;
 var currentPage = 1;
 
 //GET category home
-router.get('/',(req,res)=>{
+router.get('/',isAdmin,(req,res)=>{
     if(req.session.errors){
         req.session.errors=null;
     }
@@ -49,7 +51,7 @@ router.get('/',(req,res)=>{
 });
 
 //GET category add
-router.get('/add-category',(req,res)=>{
+router.get('/add-category',isAdmin,(req,res)=>{
     var errors;
     if(req.session.errors){
         errors=req.session.errors;
@@ -63,7 +65,7 @@ router.get('/add-category',(req,res)=>{
 });
 
 //POST category add
-router.post('/add-category',(req,res)=>{
+router.post('/add-category',isAdmin,(req,res)=>{
     req.checkBody('name','Name must has a value').notEmpty();
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('created_by','Created by must has a value').notEmpty();
@@ -108,7 +110,7 @@ router.post('/add-category',(req,res)=>{
 
 
 //GET Category edit
-router.get('/edit-category/:id',(req,res)=>{
+router.get('/edit-category/:id',isAdmin,(req,res)=>{
     var errors;
     if(req.session.errors){
         errors=req.session.errors;
@@ -132,7 +134,7 @@ router.get('/edit-category/:id',(req,res)=>{
 });
 
 //POST Category edit
-router.post('/edit-category/:id',(req,res)=>{
+router.post('/edit-category/:id',isAdmin,(req,res)=>{
     req.checkBody('name','Name must has a value').notEmpty();
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('modified_by','Modified by must has a value').notEmpty();
@@ -179,7 +181,7 @@ router.post('/edit-category/:id',(req,res)=>{
 
 
 //GET Delete category
-router.get('/delete-category/:id',(req,res)=>{
+router.get('/delete-category/:id',isAdmin,(req,res)=>{
     CategoriesModel.deleteCategory(req.params.id,(err,result)=>{
         if(err){
             return console.log(err);

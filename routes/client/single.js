@@ -7,6 +7,7 @@ var CompanyModels=require('../../models/companyProducts');
 
 router.get('/:product',(req,res)=>{
 
+    var loggedIn=(req.isAuthenticated()) ? true:false
     var meta_title=req.params.product;
     ProductModels.findProductByMetatitle(meta_title,(err,product)=>{
         if(err){
@@ -32,6 +33,7 @@ router.get('/:product',(req,res)=>{
                                             }else{
                                                 res.render('client/components/single',{
                                                     title:'Product',
+                                                    loggedIn:loggedIn,
                                                     product:product[0],
                                                     category:category[0],
                                                     company:company[0],

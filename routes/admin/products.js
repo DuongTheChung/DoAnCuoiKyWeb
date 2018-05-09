@@ -11,6 +11,10 @@ var CategoriesModel=require('../../models/categories');
 var CompanyProductsModel=require('../../models/companyProducts');
 var strHelper=require('../../helper/strReplace');
 
+var auth=require('../../config/auth');
+var isAdmin=auth.isAdmin;
+
+
 //Pagination
 var totalProducts = 0;
 var pageSize = 4;
@@ -19,7 +23,7 @@ var start = 0;
 var currentPage = 1;
 
 //GET Product Home
-router.get('/',(req,res)=>{
+router.get('/',isAdmin,(req,res)=>{
     if(req.session.errors){
       req.session.errors=null;
     }
@@ -57,7 +61,7 @@ router.get('/',(req,res)=>{
 
 
 //GET add product
-router.get('/add-product',(req,res)=>{
+router.get('/add-product',isAdmin,(req,res)=>{
   var errors;
   if(req.session.errors){
     errors=req.session.errors;
@@ -85,7 +89,7 @@ router.get('/add-product',(req,res)=>{
 });
 
 //POST add product
-router.post('/add-product',(req,res)=>{
+router.post('/add-product',isAdmin,(req,res)=>{
   var imageFile= typeof req.files.image !== "undefined" ? req.files.image.name : "";
   req.checkBody('name','Name must has a value').notEmpty();
   req.checkBody('display_order','Display order must has a value').notEmpty();
@@ -161,7 +165,7 @@ router.post('/add-product',(req,res)=>{
 
 
 //GET product edit
-router.get('/edit-product/:id',(req,res)=>{
+router.get('/edit-product/:id',isAdmin,(req,res)=>{
   var errors;
   if(req.session.errors){
     errors=req.session.errors;
@@ -208,7 +212,7 @@ router.get('/edit-product/:id',(req,res)=>{
 
 
 //POST edit product
-router.post('/edit-product/:id',(req,res)=>{
+router.post('/edit-product/:id',isAdmin,(req,res)=>{
   var imageFile= typeof req.files.image !== "undefined" ? req.files.image.name : "";
   req.checkBody('name','Name must has a value').notEmpty();
   req.checkBody('display_order','Display order must has a value').notEmpty();
@@ -290,7 +294,7 @@ router.post('/edit-product/:id',(req,res)=>{
 
 //GET delete product
 
-router.get('/delete-product/:id',(req,res)=>{
+router.get('/delete-product/:id',isAdmin,(req,res)=>{
   var id=req.params.id;
   var path='public/admin/images/product_images/product'+id;
   fs.remove(path,(err)=>{

@@ -7,7 +7,7 @@
                     <div id="picture-frame">
                         <img src="/admin/images/product_images/product<%= product.id %>/<%= product.image %>" data-src="images/si-1.jpg" alt="" class="img-responsive"/>
                     </div>
-                    <script src="js/jquery.zoomtoo.js"></script>
+                    <script src="/client/js/jquery.zoomtoo.js"></script>
                     <script>
                     $(function() {
                         $("#picture-frame").zoomToo({
@@ -27,17 +27,22 @@
                         <div class="starbox small ghosting"> </div>
                     </div>
                     <p class="in-pa">
-                        <%= product.description %>
-                    </p>
-
-                    <p class="in-pa">
-                        Quantity: <%= product.quantity %></br>
+                        <%= product.description %><br>
+                        Quantity: <%= product.quantity %><br>
                         ViewCount: <%= product.view_count %>
                     </p>
-                    <a href="/products/category/<%= category.meta_title %>"><%= product.parent_category %></a> |
-                    <a href="/products/producer/<%= company.meta_title  %>"><%= product.parent_company %></a>
+                    <div class="parent">
+                        <a  href="/products/category/<%= category.meta_title %>"><%= product.parent_category %></a>
+                        <a  href="/products/producer/<%= company.meta_title  %>"><%= product.parent_company %></a>
+                    </div>
+                    </div>
+                    <br><br>
                     <div class="add add-3">
-                        <button class="btn btn-danger my-cart-btn my-cart-b" data-id="1" data-name="Wheat" data-summary="summary 1" data-price="6.00" data-quantity="1" data-image="images/si.jpg">Add to Cart</button>
+                        <% if(loggedIn) { %>
+                            <a href="/cart/add/<%= product.meta_title %>" class="btn btn-danger my-cart-btn my-cart-b">Add to Cart</a>
+                        <% }else { %>
+                            <span class="m_link"><a href="/users/login">login to add cart</a> </span>
+                        <% } %>
                     </div>
                 <div class="clearfix"> </div>
                 </div>
@@ -78,7 +83,7 @@
                           <div class="clearfix"></div>
                        </div>
                        <div class="add">
-                          <button class="btn btn-danger my-cart-btn my-cart-b" data-id="5" data-name="Lays" data-summary="summary 5" data-price="0.70" data-quantity="1" data-image="images/of4.png">Add to Cart</button>
+                            <a href="/single/<%= product.meta_title %>" class="btn btn-danger my-cart-btn my-cart-b">View Detail</a>
                        </div>
                     </div>
                  </div>
@@ -118,7 +123,8 @@
                               <div class="clearfix"></div>
                            </div>
                            <div class="add">
-                              <button class="btn btn-danger my-cart-btn my-cart-b" data-id="5" data-name="Lays" data-summary="summary 5" data-price="0.70" data-quantity="1" data-image="images/of4.png">Add to Cart</button>
+                                <a href="/single/<%= product.meta_title %>" class="btn btn-danger my-cart-btn my-cart-b">View Detail</a>
+
                            </div>
                         </div>
                      </div>

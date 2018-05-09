@@ -833,6 +833,17 @@ span.price-in1 {
 	line-height:1.5em;
 	font-family: 'Roboto-Regular';
 }
+
+.parent a{
+  border: 1px solid slategray;padding: 8px; 
+  text-decoration: none;
+  color: #B2B2B2;
+}
+
+.parent a:hover{
+  color: #029241;
+}
+
 label.add-to{
 	display:block;
 	font-size: 2em;
@@ -1853,4 +1864,5 @@ h1.typo1 {
   font-size: 1.7em;
   margin: 0 0 0.5em;
 }
+
 }
