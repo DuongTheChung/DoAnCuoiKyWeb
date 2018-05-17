@@ -94,6 +94,12 @@ var Product={
             product.display_order,product.description,product.price,product.image,
             product.quantity,product.modified_by,product.modified_date
         ,id],callback);
+    },
+
+    updateViewCountProduct:function(id,count,callback){
+        return db.query("update product set "
+        +"view_count=? where id=?",
+        [count,id],callback);
     }
 }
 

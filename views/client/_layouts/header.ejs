@@ -45,7 +45,7 @@
                   <li><a href="/contact">Contact</a></li>
                   |
                   <% if(user) { %>
-                    <li><a href="/users/account-manager">Hi,<%= user[0].username %></a></li>
+                    <li><a href="/users/detail/<%= user[0].id %>">Hi,<%= user[0].username %></a></li>
                     |
                       <% if(user && user[0].admin==1 ) { %>
                         <li><a href="/admin">Admin Manager</a></li>
@@ -107,7 +107,7 @@
             </div>
             <div class="header-bottom-right">
                <div class="search">
-                  <input type="text" name="s" class="textbox" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+                  <input type="text" name="search" class="textbox" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
                   <input type="submit" value="Subscribe" id="submit" name="submit">
                   <div id="response"> </div>
                </div>
@@ -129,3 +129,13 @@
             <div class="clear"></div>
          </div>
       </div>
+      <%- messages('./common/messages', locals) %>
+      <% if(errors) {%>
+            <% errors.forEach(function(error) { %>
+                  <div class="alert alert-danger">
+                        <%= error.msg %>
+                  </div>
+           <% }); %>
+      <% } %>
+
+

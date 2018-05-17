@@ -1,0 +1,58 @@
+<% include ../../_layouts/header %>
+<div class="container" style="padding-top:30px;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                        </div>
+                        <div class="col-sm-6 col-md-8">
+                            <h2><%= user[0].username %></h2>
+                            <p>
+                                <i class="glyphicon glyphicon-envelope"></i><%= user[0].email %>
+                                <br />
+                                <i class="glyphicon glyphicon-gift"></i>
+                                
+                                <% if(user[0].admin==1) { %>   
+                                    Admin
+                                <% }else { %>
+                                    Customer
+                                <% }%>
+                            </p>
+                            <!-- Split button -->
+                            <div class="btn-group">
+                                <a href="/users/update/<%= user[0].id %>" class="btn btn-primary">Update</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Lịch sử mua hàng</h2>
+        <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Ngày mua</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Sách Tiếng anh</td>
+                    <td>2</td>
+                    <td>20/12/23</td>
+                    <td>$300</td>
+                    <td>Đã thanh toán</td>
+                  </tr>
+                </tbody>
+              </table>
+    </div>
+    
+<% include ../../_layouts/footer %>

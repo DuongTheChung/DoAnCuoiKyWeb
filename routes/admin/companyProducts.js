@@ -68,7 +68,7 @@ router.get('/add-companyproduct',isAdmin,(req,res)=>{
 });
 
 //POST CompanyProduct add
-router.post('/add-companyproduct',isAdmin,(req,res)=>{
+router.post('/add-companyproduct',(req,res)=>{
     req.checkBody('name','Name must has a value').notEmpty();
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('email','Email must has a value').notEmpty();
@@ -144,7 +144,7 @@ router.get('/edit-companyproduct/:id',isAdmin,(req,res)=>{
 });
 
 //POST CompanyProduct edit
-router.post('/edit-companyproduct/:id',isAdmin,(req,res)=>{
+router.post('/edit-companyproduct/:id',(req,res)=>{
     req.checkBody('name','Name must has a value').notEmpty();
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('email','Email must has a value').notEmpty();

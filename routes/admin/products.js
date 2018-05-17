@@ -89,7 +89,7 @@ router.get('/add-product',isAdmin,(req,res)=>{
 });
 
 //POST add product
-router.post('/add-product',isAdmin,(req,res)=>{
+router.post('/add-product',(req,res)=>{
   var imageFile= typeof req.files.image !== "undefined" ? req.files.image.name : "";
   req.checkBody('name','Name must has a value').notEmpty();
   req.checkBody('display_order','Display order must has a value').notEmpty();
@@ -98,6 +98,8 @@ router.post('/add-product',isAdmin,(req,res)=>{
   req.checkBody('quantity','Quantity by must has a value').notEmpty();
   req.checkBody('created_by','Created by must has a value').notEmpty();
   req.checkBody('image','You must upload an image').isImage(imageFile);
+
+
 
   var name=req.body.name;
   var meta_title=strHelper.myReplace(name);
@@ -112,6 +114,7 @@ router.post('/add-product',isAdmin,(req,res)=>{
   var dt = dateTime.create();
   var date = dt.format('Y-m-d H:M:S');
   var created_date=date;
+
 
   var errors=req.validationErrors();
   if(errors){
@@ -212,7 +215,7 @@ router.get('/edit-product/:id',isAdmin,(req,res)=>{
 
 
 //POST edit product
-router.post('/edit-product/:id',isAdmin,(req,res)=>{
+router.post('/edit-product/:id',(req,res)=>{
   var imageFile= typeof req.files.image !== "undefined" ? req.files.image.name : "";
   req.checkBody('name','Name must has a value').notEmpty();
   req.checkBody('display_order','Display order must has a value').notEmpty();

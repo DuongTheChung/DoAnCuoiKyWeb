@@ -65,7 +65,7 @@ router.get('/add-category',isAdmin,(req,res)=>{
 });
 
 //POST category add
-router.post('/add-category',isAdmin,(req,res)=>{
+router.post('/add-category',(req,res)=>{
     req.checkBody('name','Name must has a value').notEmpty();
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('created_by','Created by must has a value').notEmpty();
@@ -134,7 +134,7 @@ router.get('/edit-category/:id',isAdmin,(req,res)=>{
 });
 
 //POST Category edit
-router.post('/edit-category/:id',isAdmin,(req,res)=>{
+router.post('/edit-category/:id',(req,res)=>{
     req.checkBody('name','Name must has a value').notEmpty();
     req.checkBody('display_order','Display order must has a value').notEmpty();
     req.checkBody('modified_by','Modified by must has a value').notEmpty();
