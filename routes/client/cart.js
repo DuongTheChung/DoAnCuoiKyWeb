@@ -1,7 +1,12 @@
 var express=require('express');
+var dateTime=require('node-datetime');
+var auth=require('../../config/auth');
+var isUser=auth.isUser;
+
 var router=express.Router();
 
 var ProductModel=require('../../models/products');
+var BillProductModel=require('../../models/billProducts');
 
 //GET add cart
 router.get('/add/:product',(req,res)=>{
@@ -16,6 +21,8 @@ router.get('/add/:product',(req,res)=>{
                 meta_title:meta_title,
                 qty:1,
                 name:product[0].name,
+                parent_company:product[0].parent_company,
+                parent_category:product[0].parent_category,
                 description:product[0].description,
                 price:parseFloat(product[0].price).toFixed(2),
                 image:'/admin/images/product_images/product'+ product[0].id + '/' + product[0].image
@@ -37,19 +44,21 @@ router.get('/add/:product',(req,res)=>{
                     qty:1,
                     name:product[0].name,
                     description:product[0].description,
+                    parent_company:product[0].parent_company,
+                    parent_category:product[0].parent_category,
                     price:parseFloat(product[0].price).toFixed(2),
                     image:'/admin/images/product_images/product'+ product[0].id + '/' + product[0].image
                 });
             }
         }
         req.flash('success','Product addes');
-        res.redirect('back');
+        res.redirect('/cart/checkout');
     });
 });
 
 //GET checkout page
 
-router.get('/checkout',(req,res)=>{
+router.get('/checkout',isUser,(req,res)=>{
     if(req.session.cart && req.session.cart.length==0){
         delete req.session.cart;
         res.redirect('/cart/checkout');
@@ -61,6 +70,7 @@ router.get('/checkout',(req,res)=>{
         });
     }
 });
+
 
 //GET update cart
 
@@ -95,6 +105,64 @@ router.get('/update/:product',(req,res)=>{
             break;
         }
     }
+    res.redirect('/cart/checkout');
+});
+
+//Buy cart
+router.get('/buy',(req,res)=>{
+    var cart=req.session.cart;
+    for(var i=0;i<cart.length;i++){
+        var userId=res.locals.user[0].id;
+        var meta_title=cart[i].meta_title;
+        var product_name=cart[i].name;
+        var category_name=cart[i].parent_category;
+        var company_name=cart[i].parent_company;
+        var quantity=cart[i].qty;
+        var total_price=cart[i].price*quantity;
+
+        var dt = dateTime.create();
+        var date = dt.format('Y-m-d H:M:S');
+        var created_date=date;
+      
+        var billProduct={
+            "userId":userId,
+            "product_name":product_name,
+            "category_name":category_name,
+            "company_name":company_name,
+            "quantity":quantity,
+            "total_price":total_price,
+            "created_date":created_date
+        }
+
+
+        BillProductModel.addBillProduct(billProduct,(err,result)=>{
+            if(err){
+                return console.log(err);
+            }else{
+                ProductModel.findProductByMetatitle(meta_title,(err,product)=>{
+                    if(err){
+                        return console.log(err);
+                    }else{
+                        var quantity_update=product[0].quantity-quantity;
+                        ProductModel.updateQuantityProduct(product[0].id,quantity_update,(err,product1)=>{
+                            if(err){
+                                return console.log(err);
+                            }else{
+                                var salesCountUpdate=product[0].sales_count+quantity;
+                                ProductModel.updateSalesCountProduct(product[0].id,salesCountUpdate,(err,result2)=>{
+                                    if(err){
+                                        return console.log(err);
+                                    }
+                                })
+                            }
+                        });
+                    }
+                })
+            }
+        });
+    }
+    req.flash('success','Buy success');
+    delete req.session.cart;
     res.redirect('/cart/checkout');
 });
 

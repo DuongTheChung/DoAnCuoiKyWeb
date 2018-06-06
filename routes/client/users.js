@@ -4,19 +4,26 @@ var passport=require('passport');
 var bcrypt=require('bcryptjs');
 
 var UserModel=require('../../models/users');
+var BillProductModel=require('../../models/billProducts');
+var auth=require('../../config/auth');
 
+var isUser=auth.isUser;
 //GET register
 router.get('/register',(req,res)=>{
     var errors;
-    if(req.session.errors){
-      errors=req.session.errors;
+    if(res.locals.user){
+        res.redirect('/');  
     }else{
-      req.session.errors=null;
+        if(req.session.errors){
+        errors=req.session.errors;
+        }else{
+        req.session.errors=null;
+        }
+        res.render('client/components/account/register',{
+            title:'Register',
+            errors:errors
+        });
     }
-    res.render('client/components/account/register',{
-        title:'Register',
-        errors:errors
-    });
 });
 
 //POST register
@@ -118,7 +125,7 @@ router.get('/logout',(req,res)=>{
 
 //GET user detail
 
-router.get('/detail/:id',(req,res)=>{
+router.get('/detail/:id',isUser,(req,res)=>{
 
     if(req.session.errors){
         req.session.errors=null;
@@ -128,9 +135,17 @@ router.get('/detail/:id',(req,res)=>{
         if(err){
             console.log(err);
         }else{
-            res.render('client/components/account/accountDetail',{
-                title:'User Detail',
-                user:user
+
+            BillProductModel.getBillProductByUserId(id,(err,result)=>{
+                if(err){
+                    return console.log(err);
+                }else{
+                    res.render('client/components/account/accountDetail',{
+                        title:'User Detail',
+                        user:user,
+                        billProducts:result
+                    });
+                }
             });
         }
     })
@@ -138,7 +153,7 @@ router.get('/detail/:id',(req,res)=>{
 
 //GET update user
 
-router.get('/update/:id',(req,res)=>{
+router.get('/update/:id',isUser,(req,res)=>{
     var errors;
     if(req.session.errors){
       errors=req.session.errors;
@@ -208,5 +223,20 @@ router.post('/update/:id',(req,res)=>{
             }
         });
     }
+});
+
+//GET Detail Bill
+router.get('/billdetail/:id',isUser,(req,res)=>{
+    var id=req.params.id;
+    BillProductModel.getBillProductById(id,(err,result)=>{
+        if(err){
+            console.log(err);
+        }else{   
+            res.render('client/components/account/detailBillProduct',{
+                title:'Bill Detail',
+                bill:result[0]
+            });
+        }
+    });
 });
 module.exports=router;

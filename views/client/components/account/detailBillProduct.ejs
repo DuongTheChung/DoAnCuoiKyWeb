@@ -1,0 +1,18 @@
+<% include ../../_layouts/header %>
+<div class="container">
+    <div class="jumbotron">
+        <h2 style="font-size: 30px;">Chi tiết đơn hàng</h2>
+        <div class="container">
+            <p>Tên sản phẩm: <%= bill.product_name %></p>
+            <p>Loại sản phẩm: <%= bill.category_name %></p>
+            <p>Nhà sản xuất: <%= bill.company_name %></p>
+            <p>Số lượng mua: <%= bill.quantity %></p>
+            <p>Ngày mua : <%= bill.created_date %></p>
+            <p>Số tiền : <%= bill.total_price %></p>
+            <p>Trạng thái :Đã thanh toán</p>
+        </div>
+    </div>
+</div>
+<% include ../../_layouts/footer %>
+
+    

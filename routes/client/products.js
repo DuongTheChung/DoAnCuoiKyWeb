@@ -51,12 +51,14 @@ router.get('/',(req,res)=>{
 
 
 //GET product by Category
-router.get('/category/:category',(req,res)=>{
+router.get('/loai-san-pham/:category',(req,res)=>{
    var meta_title=req.params.category;
+
    CategoriesModel.findCategoryByMetatitle(meta_title,(err,result)=>{
        if(err){
            return console.log(err);
        }else{
+
         ProductsModel.productCountByCategory(result[0].name,function(err,results) {
             if(err) throw err;
             totalProducts =results[0].count;
@@ -96,7 +98,7 @@ router.get('/category/:category',(req,res)=>{
 
 
 //GET product by productCompany
-router.get('/producer/:company',(req,res)=>{
+router.get('/nha-san-xuat/:company',(req,res)=>{
   var meta_title=req.params.company;
   CompanyProductsModel.findCompanyProductByMetatitle(meta_title,(err,result)=>{
       if(err){

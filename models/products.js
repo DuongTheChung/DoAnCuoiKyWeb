@@ -100,7 +100,19 @@ var Product={
         return db.query("update product set "
         +"view_count=? where id=?",
         [count,id],callback);
+    },
+    updateQuantityProduct:function(id,quantity,callback){
+        return db.query("update product set "
+        +"quantity=? where id=?",
+        [quantity,id],callback);
+    },
+
+    updateSalesCountProduct:function(id,sales_count,callback){
+        return db.query("update product set "
+        +"sales_count=? where id=?",
+        [sales_count,id],callback);
     }
+
 }
 
 module.exports=Product;
