@@ -45,20 +45,13 @@ router.post('/register',(req,res)=>{
         req.session.errors=errors;
         res.redirect('/users/register');
     }else{
-        UserModel.findOneUserByName(username,(err,user)=>{
-            if(err){
-                return console.log(err);
-            }
-            if(user != ""){
+        UserModel.findOneUserByName(username).then(user=>{
+            if(user.length>0){
                 req.flash('danger','Username exists');
                 res.redirect('/users/register');
             }else{
-
-                UserModel.findOneUserByEmail(email,(err,user1)=>{
-                    if(err){
-                        return console.log(err);
-                    }
-                    if(user1 != ""){
+                UserModel.findOneUserByEmail(email).then(user1=>{
+                    if(user1.length>0){
                         req.flash('danger','Email exists');
                         res.redirect('/users/register');
                     }else{
@@ -75,30 +68,25 @@ router.post('/register',(req,res)=>{
                                     return console.log(err);
                                 }else{
                                     user.password=hash;
-                                    UserModel.addUser(user,(err,user)=>{
-                                        if(err){
-                                            return console.log(err);
-                                        }else{
-                                            req.flash('success','User register success');
-                                            res.redirect('/users/login');
+                                    UserModel.addUser(user).then(user2=>{
+                                        req.flash('success','User register success');
+                                        res.redirect('/users/login');
                                              
-                                        }
                                     });
                                 }
+                                });
                             });
-                        });
-                    }
-                });
+                        }
+                    });
+                }
+            });
 
-            }
-        });
-    }
-
+        }
 });
+ 
 
 //GET login page
 router.get('/login',(req,res)=>{
-
     if(res.locals.user){
         res.redirect('/');  
     }
@@ -131,24 +119,15 @@ router.get('/detail/:id',isUser,(req,res)=>{
         req.session.errors=null;
     }
     var id=req.params.id;
-    UserModel.findUserById(id,(err,user)=>{
-        if(err){
-            console.log(err);
-        }else{
-
-            BillProductModel.getBillProductByUserId(id,(err,result)=>{
-                if(err){
-                    return console.log(err);
-                }else{
-                    res.render('client/components/account/accountDetail',{
-                        title:'User Detail',
-                        user:user,
-                        billProducts:result
-                    });
-                }
+    UserModel.findUserById(id).then(user=>{
+        BillProductModel.getBillProductByUserId(id).then(result=>{
+            res.render('client/components/account/accountDetail',{
+                title:'User Detail',
+                user:user,
+                billProducts:result
             });
-        }
-    })
+        });
+    });
 });
 
 //GET update user
@@ -160,16 +139,12 @@ router.get('/update/:id',isUser,(req,res)=>{
     }else{
       req.session.errors=null;
     }
-        UserModel.findUserById(req.params.id,(err,user)=>{
-        if(err){
-            return console.log(err);
-        }else{
-            res.render('client/components/account/editAccount',{
-                title:'Update user',
-                user:user,
-                errors:errors  
-            });
-        }
+    UserModel.findUserById(req.params.id).then(user=>{
+        res.render('client/components/account/editAccount',{
+            title:'Update user',
+            user:user,
+            errors:errors  
+        });
     });
 });
 
@@ -188,19 +163,13 @@ router.post('/update/:id',(req,res)=>{
         req.session.errors=errors;
         res.redirect('/users/update/'+id);
     }else{
-        UserModel.findOneUserByUsernameOtherId(username,id,(err,user)=>{
-            if(err){
-                return console.log(err);
-            }
-            if(user != ""){
+        UserModel.findOneUserByUsernameOtherId(username,id).then(user=>{
+            if(user.length>0){
                 req.flash('danger','UserName is exists');
                 res.redirect('/users/update/'+id);
             }else{
-                UserModel.findOneUserByEmailOtherId(email,id,(err,user1)=>{
-                    if(err){
-                        return console.log(err);
-                    }
-                    if(user1 != ""){
+                UserModel.findOneUserByEmailOtherId(email,id).then(user1=>{
+                    if(user1.length>0){
                         req.flash('danger','Email is exists');
                         res.redirect('/users/update/'+id);
                     }else{
@@ -209,14 +178,10 @@ router.post('/update/:id',(req,res)=>{
                             "email":email
                         };
 
-                        UserModel.updateUser(user,id,(err,result)=>{
-                            if(err){
-                                return console.log(err);
-                            }else{
-                                req.flash('success','User update success');
-                                res.redirect('/users/detail/'+id);
+                        UserModel.updateUser(user,id).then(result=>{
+                            req.flash('success','User update success');
+                            res.redirect('/users/detail/'+id);
                                
-                            }
                         });
                     }
                 });
@@ -228,15 +193,11 @@ router.post('/update/:id',(req,res)=>{
 //GET Detail Bill
 router.get('/billdetail/:id',isUser,(req,res)=>{
     var id=req.params.id;
-    BillProductModel.getBillProductById(id,(err,result)=>{
-        if(err){
-            console.log(err);
-        }else{   
-            res.render('client/components/account/detailBillProduct',{
-                title:'Bill Detail',
-                bill:result[0]
-            });
-        }
+    BillProductModel.getBillProductById(id).then(result=>{  
+        res.render('client/components/account/detailBillProduct',{
+            title:'Bill Detail',
+            bill:result[0]
+        });
     });
 });
 module.exports=router;

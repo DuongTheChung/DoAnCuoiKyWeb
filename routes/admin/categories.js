@@ -19,8 +19,7 @@ router.get('/',isAdmin,(req,res)=>{
     if(req.session.errors){
         req.session.errors=null;
     }
-    CategoriesModel.categoryCount(function(err,results) {
-        if(err) throw err;
+    CategoriesModel.categoryCount().then(results=>{
         totalCategory =results[0].count;
         pageCount = Math.ceil(totalCategory/pageSize);
         if (typeof req.query.page !== 'undefined') {
@@ -34,10 +33,7 @@ router.get('/',isAdmin,(req,res)=>{
             start=(currentPage - 1) * pageSize;
         }
     
-        CategoriesModel.getAllCategoryPaging({offset: start,limit : pageSize}, function(err,results){
-          if(err){
-            res.json(err);
-          }else{
+        CategoriesModel.getAllCategoryPaging(start,pageSize).then(results=>{
             res.render('admin/components/categories/homeCategories',{
                 title: 'Home Category',       
                 categories: results, 
@@ -45,10 +41,14 @@ router.get('/',isAdmin,(req,res)=>{
                 pageSize: pageSize, 
                 currentPage: currentPage
             });
-          }
-        });
-    });
+          }).catch(err=>{
+            console.log(err);
+          })
+        }).catch(err=>{
+            console.log(err);
+        })
 });
+
 
 //GET category add
 router.get('/add-category',isAdmin,(req,res)=>{
@@ -82,8 +82,8 @@ router.post('/add-category',(req,res)=>{
         req.session.errors=errors;
         res.redirect('/admin/category/add-category');
     }else{
-        CategoriesModel.findCategoryByName(name,(err,results)=>{
-            if(results != ""){
+        CategoriesModel.findCategoryByName(name).then(results=>{
+            if(results.length>0){
                 req.flash('danger','Category already exists');
                 res.redirect('/admin/category/add-category');
             }else{
@@ -95,19 +95,18 @@ router.post('/add-category',(req,res)=>{
                     "created_by":created_by
                 };
 
-                CategoriesModel.addCategory(category,(err,result)=>{
-                    if(err){
-                        return console.log(err);
-                    }else{
+                CategoriesModel.addCategory(category).then(result=>{
                         req.flash('success','Category added success');
                         res.redirect('/admin/category');
-                    }
-                });
+                }).catch(err=>{
+                    console.log(err);
+                })
             }
-        });
+        }).catch(err=>{
+            console.log(err);
+        })
     }
 });
-
 
 //GET Category edit
 router.get('/edit-category/:id',isAdmin,(req,res)=>{
@@ -117,20 +116,18 @@ router.get('/edit-category/:id',isAdmin,(req,res)=>{
     }else{
         req.session.errors=null;
     }
-    CategoriesModel.getCategoryById(req.params.id,(err,result)=>{
-        if(err){
-            return console.log(err);
-        }else{
-            res.render('admin/components/categories/editCategories',{
-                title:'Edit Category',
-                errors:errors,
-                name:result[0].name,
-                display_order:result[0].display_order,
-                id:result[0].id,
-                modified_by:result[0].modified_by
-            });
-        }
-    });
+    CategoriesModel.getCategoryById(req.params.id).then(result=>{
+        res.render('admin/components/categories/editCategories',{
+            title:'Edit Category',
+            errors:errors,
+            name:result[0].name,
+            display_order:result[0].display_order,
+            id:result[0].id,
+            modified_by:result[0].modified_by
+        });
+    }).catch(err=>{
+        console.log(err);
+    })
 });
 
 //POST Category edit
@@ -152,8 +149,8 @@ router.post('/edit-category/:id',(req,res)=>{
         req.session.errors=errors;
         res.redirect('/admin/category/edit-category/'+id);
     }else{
-        CategoriesModel.findCategoryByMetatitleOtherId(meta_title,id,(err,results)=>{
-            if(results != ""){
+        CategoriesModel.findCategoryByMetatitleOtherId(meta_title,id).then(results=>{
+            if(results.length>0){
                 req.flash('danger','Category already exists');
                 res.redirect('/admin/category/edit-category/'+id);
             }else{
@@ -165,30 +162,28 @@ router.post('/edit-category/:id',(req,res)=>{
                     "modified_by":modified_by
                 };
 
-                CategoriesModel.updateCategory(id,category,(err,result)=>{
-                    if(err){
-                        return console.log(err);
-                    }else{
-                        req.flash('success','Category edited success');
-                        res.redirect('/admin/category');
-                    }
+                CategoriesModel.updateCategory(id,category).then(result=>{
+                    req.flash('success','Category edited success');
+                    res.redirect('/admin/category');
+                }).catch(err=>{
+                    console.log(err);
+                })
 
-                });
             }
-        });
+        }).catch(err=>{
+            console.log(err);
+        })
     }
 });
 
 
 //GET Delete category
 router.get('/delete-category/:id',isAdmin,(req,res)=>{
-    CategoriesModel.deleteCategory(req.params.id,(err,result)=>{
-        if(err){
-            return console.log(err);
-        }else{
-            req.flash('success','Category Deleted success');
-            res.redirect('/admin/category');
-        }
+    CategoriesModel.deleteCategory(req.params.id).then(result=>{
+        req.flash('success','Category Deleted success');
+        res.redirect('/admin/category');
+    }).catch(err=>{
+        console.log(err);
     })
 });
 module.exports=router;

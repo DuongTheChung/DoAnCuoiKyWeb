@@ -11,10 +11,7 @@ var BillProductModel=require('../../models/billProducts');
 //GET add cart
 router.get('/add/:product',(req,res)=>{
     var meta_title=req.params.product;
-    ProductModel.findProductByMetatitle(meta_title,(err,product)=>{
-        if(err){
-            return console.log(err);
-        }
+    ProductModel.findProductByMetatitle(meta_title).then(product=>{
         if(typeof req.session.cart== "undefined"){
             req.session.cart=[];
             req.session.cart.push({
@@ -133,32 +130,16 @@ router.get('/buy',(req,res)=>{
             "total_price":total_price,
             "created_date":created_date
         }
-
-
-        BillProductModel.addBillProduct(billProduct,(err,result)=>{
-            if(err){
-                return console.log(err);
-            }else{
-                ProductModel.findProductByMetatitle(meta_title,(err,product)=>{
-                    if(err){
-                        return console.log(err);
-                    }else{
-                        var quantity_update=product[0].quantity-quantity;
-                        ProductModel.updateQuantityProduct(product[0].id,quantity_update,(err,product1)=>{
-                            if(err){
-                                return console.log(err);
-                            }else{
-                                var salesCountUpdate=product[0].sales_count+quantity;
-                                ProductModel.updateSalesCountProduct(product[0].id,salesCountUpdate,(err,result2)=>{
-                                    if(err){
-                                        return console.log(err);
-                                    }
-                                })
-                            }
-                        });
-                    }
-                })
-            }
+        BillProductModel.addBillProduct(billProduct).then(result=>{
+            ProductModel.findProductByMetatitle(meta_title).then(product=>{
+                var quantity_update=product[0].quantity-quantity;
+                ProductModel.updateQuantityProduct(product[0].id,quantity_update).then(product1=>{
+                    var salesCountUpdate=product[0].sales_count+quantity;
+                    ProductModel.updateSalesCountProduct(product[0].id,salesCountUpdate).then(result2=>{
+                      
+                    });      
+                });
+            });
         });
     }
     req.flash('success','Buy success');

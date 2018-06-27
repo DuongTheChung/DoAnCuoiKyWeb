@@ -1,6 +1,66 @@
 var db=require('../config/DBConnection');
 
+exports.getAllCategory = () => {
+	var sql = `select * from category`;
+	return db.load(sql);
+}
 
+exports.getAllCategoryPaging = (offset,limit) => {
+	var sql = `select * from category order by display_order Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
+exports.categoryCount = () => {
+	var sql = `select count(1) as count from category`;
+	return db.load(sql);
+}
+
+exports.getCategoryById = (id) => {
+	var sql = `select * from category where id=${id}`;
+	return db.load(sql);
+}
+
+exports.findCategoryByName = (name) => {
+	var sql = `select* from category where name='${name}'`;
+	return db.load(sql);
+}
+
+
+
+exports.findCategoryByMetatitle = meta_title => {
+	var sql = `select * from category where meta_title ='${meta_title}'`;
+	return db.load(sql);
+}
+
+
+exports.findCategoryByMetatitleOtherId = (id,meta_title) => {
+	var sql = `select * from category where meta_title='${meta_title}' and id != ${id}`;
+	return db.load(sql);
+}
+
+
+exports.addCategory = (category) => {
+	var sql = `Insert into category(name,meta_title,display_order,"
+    +"created_date,created_by) values('${category.name}','${category.meta_title}',${category.display_order},${category.created_date},'${category.created_by}')`;
+	return db.save(sql);
+}
+
+exports.deleteCategory = (id) => {
+	var sql = `delete from category where id=${id}`;
+	return db.save(sql);
+}
+
+
+
+exports.updateCategory = (id,category) => {
+	var sql = `update category set name='${category.name}',meta_title='${category.meta_title}',"
+    +"display_order=${category.display_order},modified_date=${category.modified_date},modified_by='${category.modified_by}' where id=${id}`;
+	return db.save(sql);
+}
+
+
+//su dung callback
+/*
 //Categoty
 var Category={
 
@@ -52,3 +112,5 @@ var Category={
 }
 
 module.exports=Category;
+
+*/

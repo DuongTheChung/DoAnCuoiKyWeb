@@ -20,8 +20,7 @@ router.get('/',isAdmin,(req,res)=>{
     if(req.session.errors){
         req.session.errors=null;
     }
-    CompanyProductsModel.companyCount(function(err,result) {
-        if(err) throw err;
+    CompanyProductsModel.companyCount().then(result=>{
         totalCompanyProduct =result[0].count;
         pageCount = Math.ceil(totalCompanyProduct/pageSize);
         if (typeof req.query.page !== 'undefined') {
@@ -35,10 +34,7 @@ router.get('/',isAdmin,(req,res)=>{
             start=(currentPage - 1) * pageSize;
         }
     
-        CompanyProductsModel.getAllCompanyProductPaging({offset: start,limit : pageSize}, function(err,results){
-          if(err){
-            res.json(err);
-          }else{
+        CompanyProductsModel.getAllCompanyProductPaging(start,pageSize).then(results=>{
             res.render('admin/components/companyProducts/homeCompanyProducts',{
                 title: 'Home CompanyProduct',       
                 CompanyProducts: results, 
@@ -46,9 +42,12 @@ router.get('/',isAdmin,(req,res)=>{
                 pageSize: pageSize, 
                 currentPage: currentPage
             });
-          }
-        });
-    });
+          }).catch(err=>{
+              console.log(err);
+          })
+        }).catch(err=>{
+            console.log(err);
+        })
 });
 
 
@@ -89,8 +88,8 @@ router.post('/add-companyproduct',(req,res)=>{
         req.session.errors=errors;
         res.redirect('/admin/companyproduct/add-companyproduct');
     }else{
-        CompanyProductsModel.findCompanyProductByName(name,(err,results)=>{
-            if(results != ""){
+        CompanyProductsModel.findCompanyProductByName(name).then(results=>{
+            if(results.length>0){
                 req.flash('danger','Company already exists');
                 res.redirect('/admin/companyproduct/add-companyproduct');
             }else{
@@ -104,16 +103,16 @@ router.post('/add-companyproduct',(req,res)=>{
                     "created_by":created_by
                 };
 
-                CompanyProductsModel.addCompanyProduct(companyProduct,(err,result)=>{
-                    if(err){
-                        return console.log(err);
-                    }else{
-                        req.flash('success','Company added success');
-                        res.redirect('/admin/companyproduct');
-                    }
-                });
+                CompanyProductsModel.addCompanyProduct(companyProduct).then(result=>{
+                    req.flash('success','Company added success');
+                    res.redirect('/admin/companyproduct');
+                }).catch(err=>{
+                    console.log(err);
+                })
             }
-        });
+        }).catch(err=>{
+            console.log(err);
+        })
     }
 });
 
@@ -125,10 +124,7 @@ router.get('/edit-companyproduct/:id',isAdmin,(req,res)=>{
     }else{
         req.session.errors=null;
     }
-    CompanyProductsModel.getCompanyProductById(req.params.id,(err,result)=>{
-        if(err){
-            return console.log(err);
-        }else{
+    CompanyProductsModel.getCompanyProductById(req.params.id).then(result=>{
             res.render('admin/components/companyProducts/editCompanyProducts',{
                 title:'Edit CompanyProduct',
                 errors:errors,
@@ -139,8 +135,9 @@ router.get('/edit-companyproduct/:id',isAdmin,(req,res)=>{
                 id:result[0].id,
                 modified_by:result[0].modified_by
             });
-        }
-    });
+        }).catch(err=>{
+            console.log(err);
+        })
 });
 
 //POST CompanyProduct edit
@@ -166,8 +163,8 @@ router.post('/edit-companyproduct/:id',(req,res)=>{
         req.session.errors=errors;
         res.redirect('/admin/companyproduct/edit-companyproduct/'+id);
     }else{
-        CompanyProductsModel.findCompanyProductByMetatitleOtherId(meta_title,id,(err,results)=>{
-            if(results != ""){
+        CompanyProductsModel.findCompanyProductByMetatitleOtherId(meta_title,id).then(results=>{
+            if(results.length>0){
                 req.flash('danger','CompanyProduct already exists');
                 res.redirect('/admin/companyproduct/edit-companyproduct/'+id);
             }else{
@@ -181,30 +178,26 @@ router.post('/edit-companyproduct/:id',(req,res)=>{
                     "modified_by":modified_by
                 };
 
-                CompanyProductsModel.updateCompanyProduct(id,companyProduct,(err,result)=>{
-                    if(err){
-                        return console.log(err);
-                    }else{
-                        req.flash('success','CompanyProduct edited success');
-                        res.redirect('/admin/companyproduct');
-                    }
-
-                });
+                CompanyProductsModel.updateCompanyProduct(id,companyProduct).then(result=>{
+                    req.flash('success','CompanyProduct edited success');
+                    res.redirect('/admin/companyproduct');
+                }).catch(err=>{
+                    console.log(err);
+                })
             }
-        });
+        }).catch(err=>{
+            console.log(err);
+        })
     }
 });
 
-
 //GET Delete CompanyProduct
 router.get('/delete-companyproduct/:id',isAdmin,(req,res)=>{
-    CompanyProductsModel.deleteCompanyProduct(req.params.id,(err,result)=>{
-        if(err){
-            return console.log(err);
-        }else{
-            req.flash('success','CompanyProduct Deleted success');
-            res.redirect('/admin/companyproduct');
-        }
+    CompanyProductsModel.deleteCompanyProduct(req.params.id).then(result=>{
+        req.flash('success','CompanyProduct Deleted success');
+        res.redirect('/admin/companyproduct');
+    }).catch(err=>{
+        console.log(err);
     })
-});
+})
 module.exports=router;

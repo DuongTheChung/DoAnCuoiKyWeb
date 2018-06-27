@@ -6,14 +6,10 @@ var bcrypt=require('bcryptjs');
 module.exports=function(passport){
 
     passport.use(new LocalStrategy(function(username,password,done){
-        UserModel.findOneUserByName(username,(err,user)=>{
-            if(err){
-                console.log(err);
-            }
-            if(user==""){
+        UserModel.findOneUserByName(username).then(user=>{
+            if(user.length==0){
                 return done(null,false,{message:'No user found'});
             }
-
             bcrypt.compare(password,user[0].password,(err,isMatch)=>{
                 if(err){
                     console.log(err);
@@ -32,8 +28,10 @@ module.exports=function(passport){
     });
 
     passport.deserializeUser((id,done)=>{
-        UserModel.findUserById(id,(err,user)=>{
-            done(err,user);
-        });
+        UserModel.findUserById(id).then(function(user) {
+            done(null, user);
+        }).catch(function (err) {
+            console.log(err);
+        })
     });
 }

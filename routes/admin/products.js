@@ -27,8 +27,7 @@ router.get('/',isAdmin,(req,res)=>{
     if(req.session.errors){
       req.session.errors=null;
     }
-    ProductsModel.productCount(function(err,results) {
-        if(err) throw err;
+    ProductsModel.productCount().then(results=>{
         totalProducts =results[0].count;
         pageCount = Math.ceil(totalProducts/pageSize);
         if (typeof req.query.page !== 'undefined') {
@@ -42,10 +41,7 @@ router.get('/',isAdmin,(req,res)=>{
             start=(currentPage - 1) * pageSize;
         }
     
-        ProductsModel.getAllProductPaging({offset: start,limit : pageSize}, function(err,results){
-          if(err){
-            res.json(err);
-          }else{
+        ProductsModel.getAllProductPaging(start,pageSize).then(results=>{
             res.render('admin/components/products/homeProducts',{
                 title: 'Home Product',
                 totalProducts:totalProducts,       
@@ -54,9 +50,12 @@ router.get('/',isAdmin,(req,res)=>{
                 pageSize: pageSize, 
                 currentPage: currentPage
             });
-          }
-        });
-    });
+          }).catch(err=>{
+            console.log(err);
+          })
+        }).catch(err=>{
+          console.log(err);
+        })
 });
 
 
@@ -68,24 +67,20 @@ router.get('/add-product',isAdmin,(req,res)=>{
   }else{
     req.session.errors=null;
   }
-  CategoriesModel.getAllCategory((err,categories)=>{
-    if(err){
-      return console.log(err);
-    }else{
-      CompanyProductsModel.getAllCompanyProduct((err,companyProducts)=>{
-        if(err){
-          return console.log(err);
-        }else{
+  CategoriesModel.getAllCategory().then(categories=>{
+      CompanyProductsModel.getAllCompanyProduct().then(companyProducts=>{
           res.render('admin/components/products/addProducts',{
             title:'Add product',
             errors:errors,
             categories:categories,
             companyProducts:companyProducts
           });
-        }
-      });
-    }
-  });
+        }).catch(err=>{
+          console.log(err);
+        })
+      }).catch(err=>{
+        console.log(err);
+      })
 });
 
 //POST add product
@@ -121,8 +116,8 @@ router.post('/add-product',(req,res)=>{
     req.session.errors=errors;
     res.redirect('/admin/product/add-product');
   }else{
-      ProductsModel.findProductByMetatitle(meta_title,(err,results)=>{
-          if(results != ""){
+      ProductsModel.findProductByMetatitle(meta_title).then(results=>{
+          if(results.length>0){
               req.flash('danger','Product already exists');
               res.redirect('/admin/product/add-product');
           }else{
@@ -141,10 +136,7 @@ router.post('/add-product',(req,res)=>{
                   "created_by"      :created_by
               };
 
-              ProductsModel.addProduct(product,(err,result)=>{
-                  if(err){
-                      return console.log(err);
-                  }else{
+              ProductsModel.addProduct(product).then(result=>{
                     mkdirp('public/admin/images/product_images/product'+result.insertId,(err)=>{
                         return console.log(err);
                     });
@@ -158,14 +150,16 @@ router.post('/add-product',(req,res)=>{
                     }         
                     req.flash('success','Product added success');
                     res.redirect('/admin/product');
-                  }
+                  }).catch(err=>{
+                    console.log(err);
+                  })
+                }
 
-              });
+              }).catch(err=>{
+                console.log(err);
+              })
           }
-      });
-  }
 });
-
 
 //GET product edit
 router.get('/edit-product/:id',isAdmin,(req,res)=>{
@@ -176,20 +170,9 @@ router.get('/edit-product/:id',isAdmin,(req,res)=>{
     req.session.errors=null;
   }
 
-  CategoriesModel.getAllCategory((err,categories)=>{
-    if(err){
-      return console.log(err);
-    }else{
-      CompanyProductsModel.getAllCompanyProduct((err,companyProducts)=>{
-        if(err){
-          return console.log(err);
-        }else{
-
-          ProductsModel.getProductById(req.params.id,(err,results)=>{
-            if(err){
-              console.log(err);
-              res.redirect('/admin/product');
-            }
+  CategoriesModel.getAllCategory().then(categories=>{
+      CompanyProductsModel.getAllCompanyProduct().then(companyProducts=>{
+          ProductsModel.getProductById(req.params.id).then(results=>{
             res.render('admin/components/products/editProducts',{
               title               :'Add product',
               errors              :errors,
@@ -206,13 +189,17 @@ router.get('/edit-product/:id',isAdmin,(req,res)=>{
               categories          :categories,
               companyProducts     :companyProducts
             });
-          });
-        }
-      });
-    }
-  });
+          }).catch(err=>{
+            console.log(err);
+            res.redirect('/admin/product');
+          })
+        }).catch(err=>{
+          console.log(err);
+        })
+      }).catch(err=>{
+        console.log(err);
+      })
 });
-
 
 //POST edit product
 router.post('/edit-product/:id',(req,res)=>{
@@ -249,8 +236,8 @@ router.post('/edit-product/:id',(req,res)=>{
       req.session.errors=errors;
       res.redirect('/admin/product/edit-product/'+id);
   }else{
-      ProductsModel.findProductByMetatitleOtherId(meta_title,id,(err,results)=>{
-          if(results != ""){
+      ProductsModel.findProductByMetatitleOtherId(meta_title,id).then(results=>{
+          if(results.length>0){
             req.flash('danger','CompanyProduct already exists');
             res.redirect('/admin/product/edit-product/'+id);
           }else{
@@ -269,10 +256,7 @@ router.post('/edit-product/:id',(req,res)=>{
                 "modified_by"     :modified_by
             };
 
-            ProductsModel.updateProduct(id,product,(err,result)=>{
-                if(err){
-                    return console.log(err);
-                }else{
+            ProductsModel.updateProduct(id,product).then(result=>{
                   mkdirp('public/admin/images/product_images/product'+id,(err)=>{
                       return console.log(err);
                   });
@@ -287,12 +271,15 @@ router.post('/edit-product/:id',(req,res)=>{
                   }         
                   req.flash('success','Product update success');
                   res.redirect('/admin/product');
-                }
+                }).catch(err=>{
+                  console.log(err);
+                })
+              }
 
-            });
+            }).catch(err=>{
+              console.log(err);
+            })
           }
-      });
-  }
 });
 
 //GET delete product
@@ -303,17 +290,14 @@ router.get('/delete-product/:id',isAdmin,(req,res)=>{
   fs.remove(path,(err)=>{
     if(err) {console.log(err);}
     else {
-      ProductsModel.deleteProduct(id,(err,result)=>{
-        if(err){
-          console.log(err);
-        }else{
+      ProductsModel.deleteProduct(id).then(result=>{
           req.flash('success','Producted deleted');
           res.redirect('/admin/product');
-        }
-      });
-    }
-  });
+        }).catch(err=>{
+          console.log(err);
+        })
+      }
+    });
 });
-
 module.exports=router;
 

@@ -8,17 +8,18 @@ var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var passport=require('passport');
 var connection=require('./config/DBConnection');
-
 var sessionStore = new session.MemoryStore;
 
 //connect database
+/*
 connection.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 });
+
+*/
 //init app
 var app=express();
-
 
 //set path views
 app.set('views',path.join(__dirname,'views'));
@@ -46,7 +47,7 @@ app.use(session({
     cookie: { maxAge: 1800000 },
     store: sessionStore,
     saveUninitialized: true,
-    resave: 'false',
+    resave: true,
     secret: 'secret'
 }));
 
@@ -138,23 +139,15 @@ app.use('/users',users);
 //Load common 
 //Load header categories
 var CategoriesModel=require('./models/categories');
-CategoriesModel.getAllCategory((err,results)=>{
-  if(err){
-    return console.log(err);
-  }else{
-    app.locals.categories=results;
-  }
-});
-//Load header companyProduct
-var CompanyProductsModel=require('./models/companyProducts');
-CompanyProductsModel.getAllCompanyProduct((err,results)=>{
-  if(err){
-    return console.log(err);
-  }else{
-    app.locals.companyProducts=results;
-  }
+CategoriesModel.getAllCategory().then(rows=>{
+  app.locals.categories=rows;
 });
 
+//Load header companyProduct
+var CompanyProductsModel=require('./models/companyProducts');
+CompanyProductsModel.getAllCompanyProduct().then(rows=>{
+  app.locals.companyProducts=rows;
+});
 
 //set server
 var port=3000;

@@ -1,7 +1,67 @@
 var db=require('../config/DBConnection');
 
-//Company product
 
+//Su dung Promise
+
+exports.getAllCompanyProduct = () => {
+	var sql = `select * from company`;
+	return db.load(sql);
+}
+
+exports.getAllCompanyProductPaging = (offset,limit) => {
+	var sql = `select * from company order by display_order Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
+exports.companyCount = (offset,limit) => {
+	var sql = `select count(1) as count from company`;
+	return db.load(sql);
+}
+
+
+exports.getCompanyProductById = (id) => {
+	var sql = `select * from company where id=${id}`;
+	return db.load(sql);
+}
+
+exports.findCompanyProductByName = (name) => {
+	var sql = `select* from company where name='${name}'`;
+	return db.load(sql);
+}
+
+
+exports.findCompanyProductByMetatitle = (meta_title) => {
+	var sql = `select * from company where meta_title='${meta_title}'`;
+	return db.load(sql);
+}
+
+exports.findCompanyProductByMetatitleOtherId = (id,meta_title) => {
+	var sql = `select * from company where meta_title='${meta_title}' and id != ${id}`;
+	return db.load(sql);
+}
+
+exports.addCompanyProduct = (company) => {
+    var sql = `Insert into company(name,meta_title,display_order,email,phone,created_date,created_by) `
+    +`values('${company.name}','${company.meta_title}',${company.display_order},'${company.email}','${company.phone}','${company.created_date}','${company.created_by}')`;
+	return db.save(sql);
+}
+
+exports.deleteCompanyProduct = (id) => {
+	var sql = `delete from company where id=${id}`;
+	return db.save(sql);
+}
+
+exports.updateCompanyProduct = (id,company) => {
+	var sql = `update company set name='${company.name}',meta_title='${company.meta_title}',`
+    +`display_order=${company.display_order},email='${company.email}',phone='${company.phone}',`
+    +`modified_date='${company.modified_date}',modified_by='${company.modified_by}' where id=${id}`;
+	return db.save(sql);
+}
+
+
+//Su dung callback
+//Company product
+/*
 var CompanyProducts={
 
     getAllCompanyProduct : function(callback){
@@ -55,3 +115,4 @@ var CompanyProducts={
 }
 
 module.exports=CompanyProducts;
+*/

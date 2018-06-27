@@ -1,6 +1,151 @@
 var db=require('../config/DBConnection');
 
+exports.getLimitProduct = () => {
+	var sql = `select * from product order by created_date DESC Limit 10`;
+	return db.load(sql);
+}
 
+exports.getProductTopView = () => {
+	var sql = `select * from product order by view_count DESC Limit 10`;
+	return db.load(sql);
+}
+
+exports.getProductSameCategoryLimit = (categoryName,productName) => {
+	var sql = `select * from product where parent_category='${categoryName}' and name <> '${productName}' order by display_order Limit 5`;
+	return db.load(sql);
+}
+
+
+exports.getProductSameCompanyLimit = (companyName,productName) => {
+	var sql = `select * from product where parent_company='${companyName}' and name <> '${productName}' order by display_order Limit 5`;
+	return db.load(sql);
+}
+
+exports.getProductSalesBest = () => {
+	var sql = `select * from product order by sales_count DESC Limit 10 `;
+	return db.load(sql);
+}
+
+exports.getProductSalesBest = () => {
+	var sql = `select * from product order by sales_count DESC Limit 10 `;
+	return db.load(sql);
+}
+
+exports.getAllProduct = () => {
+	var sql = `select * from product order by sales_count DESC Limit 10 `;
+	return db.load(sql);
+}
+
+exports.getAllProductByCategory = (parent_category,offset,limit) => {
+	var sql = `select * from product where parent_category='${parent_category}' order by display_order Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
+exports.getAllProductByCompany = (parent_company,offset,limit) => {
+	var sql = `select * from product where parent_company='${parent_company}' order by display_order Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
+exports.getAllProductPaging = (offset,limit) => {
+	var sql = `select * from product order by display_order Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
+
+exports.productCount = () => {
+	var sql = `select count(1) as count from product`;
+	return db.load(sql);
+}
+
+exports.productCountByCategory = (parent_category) => {
+	var sql = `select count(1) as count from product where parent_category='${parent_category}'`;
+	return db.load(sql);
+}
+
+
+exports.productCountByCompany = (parent_company) => {
+	var sql = `select count(1) as count from product where parent_company='${parent_company}'`;
+	return db.load(sql);
+}
+
+
+exports.getProductById = (id) => {
+	var sql = `select * from product where id=${id}`;
+	return db.load(sql);
+}
+
+
+exports.findProductByName = (name) => {
+	var sql = `select* from product where name='${name}'`;
+	return db.load(sql);
+}
+
+
+
+exports.findProductByMetatitle = (meta_title) => {
+	var sql = `select* from product where meta_title='${meta_title}'`;
+	return db.load(sql);
+}
+
+
+exports.findProductByMetatitleOtherId = (meta_title,id) => {
+	var sql = `select * from product where meta_title='${meta_title}' and id != ${id}`;
+	return db.load(sql);
+}
+
+
+exports.addProduct = (product) => {
+	var sql = `insert into product(name,meta_title,parent_category,parent_company,display_order,description,price,`
+    +`image,quantity,created_by,created_date) `
+    +`values('${product.name}', '${product.meta_title}','${product.parent_category}','${product.parent_company}',${product.display_order},'${product.description}',${product.price}`
+    +`,'${product.image}',${product.quantity},'${product.created_by}','${product.created_date}')`;
+	return db.save(sql);
+}
+
+exports.deleteProduct = (id) => {
+	var sql = `delete from product where id=${id}`;
+	return db.save(sql);
+}
+
+
+exports.updateProduct = (id,product) => {
+	var sql = `update product set `
+    +`name='${product.name}',meta_title='${product.meta_title}',parent_category='${product.parent_category}',parent_company='${product.parent_company}',display_order=${product.display_order},`
+    +`description='${product.description}',price=${product.price},image='${product.image}',quantity=${product.quantity},modified_by='${product.modified_by}',modified_date='${product.modified_date}' where id=${id}`;
+	return db.save(sql);
+}
+
+exports.updateViewCountProduct = (id,count) => {
+	var sql = `update product set view_count=${count} where id=${id}`;
+	return db.save(sql);
+}
+
+
+
+exports.updateQuantityProduct = (id,quantity) => {
+	var sql = `update product set quantity=${quantity} where id=${id}`;
+	return db.save(sql);
+}
+
+
+exports.updateSalesCountProduct = (id,sales_count) => {
+	var sql = `update product set sales_count=${sales_count} where id=${id}`;
+	return db.save(sql);
+}
+
+exports.searchProductAndGetCount = (search) => {
+	var sql = `select count(1) as count from product where name like '${search}'`;
+	return db.load(sql);
+}
+
+exports.getAllProductByKeySearch = (search,offset,limit) => {
+	var sql = `select * from product where name like '${search}' order by display_order Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
+//Su dung callback
+
+/*
 //Categoty
 var Product={
 
@@ -116,3 +261,4 @@ var Product={
 }
 
 module.exports=Product;
+*/
