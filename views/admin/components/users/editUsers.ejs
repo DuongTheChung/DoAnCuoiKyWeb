@@ -1,0 +1,32 @@
+<% include ../../_layout/header %>
+<h2 class="page-title">Chỉnh sửa người dùng</h2>
+<br><br>
+
+<form action="/admin/users/edit-user/<%= id %>" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+    <label for="">Tên người dung: <%= username  %></label>
+    </div>
+    <div class="form-group">
+        <label for="">Chức vụ</label>
+        <select name="role" class="form-control">
+            <% roles.forEach(function(r) { %>
+                <option value="<%= r.name %>" 
+                    <% if(r.name == roleName) { %>
+                      selected="selected"
+                    <% } %>
+                ><%= r.name %></option>
+            <% }); %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="">Trạng thái tài khoản</label>
+        <% if(status==1){%> 
+           <input type="checkbox" name="status" checked>Hoạt động<br>
+        <% }else{ %>
+            <input type="checkbox" name="status">Hoạt động<br>
+        <% } %>
+    </div>
+    <button class="btn btn-primary">Update</button>
+</form>
+
+<% include ../../_layout/footer %>

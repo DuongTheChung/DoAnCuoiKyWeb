@@ -2,6 +2,25 @@
 var db=require('../config/DBConnection');
 
 //Su dung Promise
+
+
+exports.getAllUser = () => {
+    var sql = `select user.id AS id,user.username AS username,user.email AS email,user.status AS status, role_user.name AS name `
+     + `from user JOIN role_user where user.roleId=role_user.id`;
+	return db.load(sql);
+}
+
+exports.userCount = () => {
+	var sql = `select count(1) as count from user`;
+	return db.load(sql);
+}
+
+exports.getAllUserPaging = (offset,limit) => {
+	var sql = `select user.id AS id,user.username AS username,user.email AS email,user.status AS status,role_user.name AS name `
+    + `from user JOIN role_user where user.roleId=role_user.id order by display_order Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
 exports.findOneUserByName = (username) => {
 	var sql = `select * from user where username='${username}'`;
 	return db.load(sql);
@@ -24,17 +43,28 @@ exports.findOneUserByEmailOtherId = (email,id) => {
 
 
 exports.findUserById = (id) => {
-	var sql = `select * from user where id=${id}`;
+    var sql = `select user.id AS id, user.username as username , user.email AS email,user.status AS status, role_user.name AS name from user JOIN role_user `
+     +` where user.roleId=role_user.id and user.id=${id}`;
 	return db.load(sql);
 }
 
 exports.addUser = (user) => {
-	var sql = `Insert into user(username,email,password,admin) values('${user.username}','${user.email}','${user.password}',${user.admin})`;
+	var sql = `Insert into user(username,email,password) values('${user.username}','${user.email}','${user.password}')`;
 	return db.save(sql);
 }
 
 exports.updateUser = (user,id) => {
 	var sql = `update user set username='${user.username}',email='${user.email}' where id=${id}`;
+	return db.save(sql);
+}
+
+exports.deleteUser = (id) => {
+	var sql = `delete from user where id=${id}`;
+	return db.save(sql);
+}
+
+exports.updateUserByManager = (user,id) => {
+	var sql = `update user set roleId='${user.roleId}',status=${user.status} where id=${id}`;
 	return db.save(sql);
 }
 

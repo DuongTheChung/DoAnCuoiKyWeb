@@ -1,0 +1,74 @@
+<% include ../../_layout/header %>
+
+<h2 class="page-title">Người dùng</h2>
+<br><br>
+<% if(totalUsers >0 ) { %>
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>Tên người dùng</th>
+            <th>Email</th>
+            <th>Chức vụ</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% users.forEach(function(u) {%>
+        <tr>
+            <td><%= u.username %></td>
+            <td><%= u.email  %></td>
+            <td><%= u.name %></td>
+            <% if(u.status==1) { %>
+                <td style="color: green" >Hoạt động</td>
+            <% }else{%>
+                <td style="color:red" >Đang bị khóa</td>
+            <% } %>
+            <% if(user[0].username != u.username){%>
+            <td>
+                <% if(u.status==1){%>
+                    <a href="/admin/users/edit-user/<%= u.id %>" class="btn btn-primary">Edit</a>
+                <% }else{ %> 
+                    <a href="/admin/users/edit-user/<%= u.id %>" class="btn btn-primary">Edit</a>
+                    <a href="/admin/users/delete-user/<%= u.id %>" class="btn btn-danger">Delete</a>
+                <% } %> 
+            </td>
+            <% }else{ %>
+            <td></td>
+            <% } %>
+        </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<!--Phan Trang-->
+
+<% if(pageCount > 1) { %>
+    <ul class="pagination">
+      <%
+      var y = 1;
+      if(currentPage>1) {
+        y = currentPage-1;
+        %>
+        <li> <a href="/admin/users/?page=<%= y %>">&laquo;</a> </li>
+      <% } %>
+      <%  for (y; y <= pageCount; y++) {
+        if(currentPage == y) { %>
+            <li class="active"><span><%= y %></span></li>
+        <% }else{ %>
+            <li><a href="/admin/users/?page=<%= y %>"><%= y %></a></li>
+        <% }
+          if(parseInt(currentPage) + 4 == y) {
+            break;
+          }
+      }  %>
+      <% if(currentPage != pageCount) { %>
+        <li> <a href="/admin/users/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+      <% } %>
+    </ul>
+<% } %>
+<% }else { %>
+    <h3 class="text-center">There are no User</h3>
+<% } %>
+
+<% include ../../_layout/footer %>
+

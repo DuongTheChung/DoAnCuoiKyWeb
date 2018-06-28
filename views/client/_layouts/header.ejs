@@ -47,8 +47,8 @@
                   <% if(user) { %>
                     <li><a href="/users/detail/<%= user[0].id %>">Hi,<%= user[0].username %></a></li>
                     |
-                      <% if(user && user[0].admin==1 ) { %>
-                        <li><a href="/admin">Admin Manager</a></li>
+                      <% if(user && user[0].name=='admin' || user[0].name=='manager') { %>
+                        <li><a href="/admin">Manager</a></li>
                         |
                       <% } %>
                     <li><a href="/users/logout">Logout</a></li>

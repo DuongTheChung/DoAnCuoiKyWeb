@@ -67,18 +67,37 @@
                      </div>
                      <!-- /input-group -->
                   </li>
-                  <li>
-                     <a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                  </li>
-                  <li>
-                     <a href="/admin/category"><i class="fa fa-edit fa-fw"></i> Category Manager</a>
-                  </li>
-                  <li>
-                     <a href="/admin/companyproduct"><i class="fa fa-edit fa-fw"></i> CompanyProduct Manager</a>
-                  </li>
-                  <li>
-                        <a href="/admin/product"><i class="fa fa-edit fa-fw"></i> Product Manager</a>
-                  </li>
+                        <% if(user[0].name=='manager') { %>
+                              <li>
+                              <a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                              </li>
+                              <li>
+                              <a href="/admin/category" style="pointer-events: none;"><i class="fa fa-edit fa-fw"></i>Quản lý loại sản phẩm</a>
+                              </li>
+                              <li>
+                              <a href="/admin/companyproduct" style="pointer-events: none;"><i class="fa fa-edit fa-fw"></i>Quản lý nhà sản xuất</a>
+                              </li>
+                              <li>
+                              <a href="/admin/product" style="pointer-events: none;"><i class="fa fa-edit fa-fw"></i>Quản lý sản phẩm</a>
+                              </li>
+                              <a href="/admin/users"><i class="fa fa-edit fa-fw"></i>Quản lý tài khoản người dùng</a>
+                        <% }else{%>
+                              <% if(user[0].name=='admin') { %>
+                                    <li>
+                                    <a href="/admin" ><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                    </li>
+                                    <li>
+                                    <a href="/admin/category" ><i class="fa fa-edit fa-fw"></i>Quản lý loại sản phẩm</a>
+                                    </li>
+                                    <li>
+                                    <a href="/admin/companyproduct" ><i class="fa fa-edit fa-fw"></i>Quản lý nhà sản xuất</a>
+                                    </li>
+                                    <li>
+                                    <a href="/admin/product"><i class="fa fa-edit fa-fw"></i>Quản lý sản phẩm</a>
+                                    </li>
+                                    <a href="/admin/users" style="pointer-events: none;"><i class="fa fa-edit fa-fw"></i>Quản lý tài khoản người dùng</a>
+                              <% } %>
+                        <% } %>
                </ul>
             </div>
             <!-- /.sidebar-collapse -->

@@ -8,16 +8,20 @@ module.exports=function(passport){
     passport.use(new LocalStrategy(function(username,password,done){
         UserModel.findOneUserByName(username).then(user=>{
             if(user.length==0){
-                return done(null,false,{message:'No user found'});
+                return done(null,false,{message:'Không tìm thấy người dùng'});
             }
             bcrypt.compare(password,user[0].password,(err,isMatch)=>{
                 if(err){
                     console.log(err);
                 }
                 if(isMatch){
-                    return done(null,user);
+                    if(user[0].status==0){
+                        return done(null,false,{message:'Tài khoản đang bị khóa'});
+                    }else{
+                        return done(null,user);
+                    }
                 }else{
-                    return done(null,false,{message:'Wrong password'});
+                    return done(null,false,{message:'Mật khẩu không chính xác'});
                 }
             });
         });
