@@ -40,8 +40,8 @@ exports.findCategoryByMetatitleOtherId = (id,meta_title) => {
 
 
 exports.addCategory = (category) => {
-	var sql = `Insert into category(name,meta_title,display_order,"
-    +"created_date,created_by) values('${category.name}','${category.meta_title}',${category.display_order},${category.created_date},'${category.created_by}')`;
+	var sql = `Insert into category(name,meta_title,display_order,`
+    +`created_date,created_by) values('${category.name}','${category.meta_title}',${category.display_order},'${category.created_date}','${category.created_by}')`;
 	return db.save(sql);
 }
 
@@ -53,8 +53,8 @@ exports.deleteCategory = (id) => {
 
 
 exports.updateCategory = (id,category) => {
-	var sql = `update category set name='${category.name}',meta_title='${category.meta_title}',"
-    +"display_order=${category.display_order},modified_date=${category.modified_date},modified_by='${category.modified_by}' where id=${id}`;
+	var sql = `update category set name='${category.name}',meta_title='${category.meta_title}',`
+    +`display_order=${category.display_order},modified_date='${category.modified_date}',modified_by='${category.modified_by}' where id=${id}`;
 	return db.save(sql);
 }
 

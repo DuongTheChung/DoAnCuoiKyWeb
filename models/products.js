@@ -143,6 +143,18 @@ exports.getAllProductByKeySearch = (search,offset,limit) => {
 	return db.load(sql);
 }
 
+
+exports.searchProductByPriceAndGetCount = (minPrice,maxPrice) => {
+	var sql = `select count(1) as count from product where price >=${minPrice} and price <=${maxPrice}`;
+	return db.load(sql);
+}
+
+
+exports.getAllProductFromPriceSearch = (minPrice,maxPrice,offset,limit) => {
+	var sql = `select * from product where price >=${minPrice} and price <=${maxPrice} order by display_order Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
 //Su dung callback
 
 /*

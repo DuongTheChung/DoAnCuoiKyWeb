@@ -34,7 +34,11 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="add add-2">
-                            <a href="/single/<%= p.meta_title %>" class="btn btn-danger my-cart-btn my-cart-b">View Detail</a>
+                            <% if(loggedIn) { %>
+                                <a href="/cart/add/<%= p.meta_title %>" class="btn btn-danger my-cart-btn my-cart-b">Add to Cart</a>
+                            <% } else { %>
+                                <a href="/single/<%= p.meta_title %>" class="btn btn-danger my-cart-btn my-cart-b">View Detail</a>
+                            <% } %>
                         </div>
                     </div>
                     </div>
@@ -53,30 +57,29 @@
                           if(currentPage>1) {
                             y = currentPage-1;
                             %>
-
-                            <% if(meta_title=='all-product') { %>
-                                <li> <a href="/products/?page=<%= y %>">&laquo;</a> </li>
+                            <% if(meta_title=='search-name'||meta_title=='all-product') { %>
+                                <li> <a href="/products/<%= params %>/?page=<%= y %>">&laquo;</a> </li>
                             <% } else { %>
                                 <li> <a href="/products/<%= params %>/<%= meta_title %>/?page=<%= y %>">&laquo;</a> </li>
                             <% } %>
-                          <% } %>
-                          <%  for (y; y <= pageCount; y++) {
-                            if(currentPage == y) { %>
-                                <li class="active"><span><%= y %></span></li>
-                            <% }else{ %>
-                                <% if(meta_title=='all-product') { %>
-                                    <li><a href="/products/?page=<%= y %>"><%= y %></a></li>
-                                <% } else { %>
- <!--dfdf-->                                   <li><a href="/products/<%= params %>/<%= meta_title %>/?page=<%= y %>"><%= y %></a></li>
-                                <% } %>
-                            <% }
-                              if(parseInt(currentPage) + 4 == y) {
-                                break;
-                              }
-                          }  %>
+                            <% } %>
+                            <%  for (y; y <= pageCount; y++) {
+                                if(currentPage == y) { %>
+                                    <li class="active"><span><%= y %></span></li>
+                                <% }else{ %>
+                                    <% if(meta_title=='search-name'||meta_title=='all-product') { %>
+                                        <li><a href="/products/<%= params %>/?page=<%= y %>"><%= y %></a></li>
+                                    <% } else { %>
+                                        <li><a href="/products/<%= params %>/<%= meta_title %>/?page=<%= y %>"><%= y %></a></li>
+                                    <% } %>
+                                <% }
+                                  if(parseInt(currentPage) + 4 == y) {
+                                    break;
+                                  }
+                            } %>
                           <% if(currentPage != pageCount) { %>
-                            <% if(meta_title=='all-product') { %>
-                                <li> <a href="/products/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+                            <% if(meta_title=='search-name'|| meta_title=='all-product') { %>
+                                <li> <a href="/products/<%= params %>/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
                             <% }else { %>
                                 <li> <a href="/products/<%= params %>/<%= meta_title %>/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
                             <% } %>

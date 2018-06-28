@@ -101,20 +101,11 @@
                             </div>
                         </div>
                      </li>
-                     <li><a class="color6" href="/products">All Product</a></li>
+                     <li><a class="color6" href="/products/all-product">All Product</a></li>
                   </ul>
                </div>
             </div>
             <div class="header-bottom-right">
-              <form action="/products/search" method="GET">
-                <div class="form-group">
-               <div class="search">
-                  <input type="text" name="search" class="textbox" placeholder="Search">
-                  <input type="submit" name="submit">
-                  <div id="response"> </div>
-                </div>
-               </div>
-               </form>
                <div class="last">
                 <div class="cart">
                   <a href="/cart/checkout">
@@ -133,6 +124,30 @@
             <div class="clear"></div>
          </div>
       </div>
+      <div class="row">
+        <div class="container">
+          <div class="col-sm-8">
+              <div class="searchPrice">
+                  <ul>
+                      <li><a href="/products/search-price/50-150">Từ 50$-150$</a></li>
+                      <li><a href="/products/search-price/150-250">Từ 150$-250$</a></li>
+                      <li><a href="/products/search-price/250-350">Từ 250$-350$</a></li>
+                      <li><a href="/products/search-price/350-450">Từ 350$-450$</a></li>
+                  </ul>
+              </div>
+          </div>
+        <div class="col-sm-4">
+            <form class="navbar-form" role="search" action="/products/search" method="GET">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Nhập tên book" name="q">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Tìm kiếm </button>
+                    </div>
+                </div>
+            </form>
+         </div>
+      </div>
+    </div>
       <%- messages('./common/messages', locals) %>
       <% if(errors) {%>
             <% errors.forEach(function(error) { %>

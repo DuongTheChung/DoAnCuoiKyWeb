@@ -64,6 +64,42 @@ h1,h2,h3,h4,h5,h6,label,p{
   color: #000;
   font-size: 1em;
 }
+
+.searchPrice ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.searchPrice li{
+  float: left;
+}
+
+.searchPrice li a{
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  color: #999;
+  text-decoration: none;
+}
+
+.searchPrice li a:hover{
+  color: #4c4c4c;
+}
+
+.add-on .input-group-btn > .btn {
+  border-left-width:0;left:-2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+/* stop the glowing blue shadow */
+.add-on .form-control:focus {
+ box-shadow:none;
+ -webkit-box-shadow:none; 
+ border-color:#cccccc; 
+}
+.form-control{width:20%}
 /* start menu */
 .h_menu4 {
   margin: 7px 0 0px;
