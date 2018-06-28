@@ -1,0 +1,72 @@
+<% include ../../_layout/header %>
+
+<h2 class="page-title">Đơn hàng</h2>
+<br><br>
+<% if(totalBills >0 ) { %>
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>Tên người mua</th>
+            <th>Tên sách</th>
+            <th>Số lượng</th>
+            <th>Số tiền</th>
+            <th>Ngày mua hàng</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% bills.forEach(function(b) {%>
+        <tr>
+            <td><%= b.userId %></td>
+            <td><%= b.product_name  %></td>
+            <td><%= b.quantity %></td>
+            <td><%= b.total_price %>$</td>
+            <td><%= b.created_date %></td>
+            <% if(b.status==1) { %>
+                <td style="color: green" >Đã thanh toán</td>
+            <% }else{%>
+                <td style="color:red" >Chưa thanh toán</td>
+            <% } %>
+            <td>
+                <% if(b.status==1){%>
+                <% }else{ %> 
+                    <a href="/admin/billproducts/edit-bill/<%= b.id %>" class="btn btn-primary">Edit</a>
+                 <% } %> 
+            </td>
+        </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<!--Phan Trang-->
+
+<% if(pageCount > 1) { %>
+    <ul class="pagination">
+      <%
+      var y = 1;
+      if(currentPage>1) {
+        y = currentPage-1;
+        %>
+        <li> <a href="/admin/users/?page=<%= y %>">&laquo;</a> </li>
+      <% } %>
+      <%  for (y; y <= pageCount; y++) {
+        if(currentPage == y) { %>
+            <li class="active"><span><%= y %></span></li>
+        <% }else{ %>
+            <li><a href="/admin/users/?page=<%= y %>"><%= y %></a></li>
+        <% }
+          if(parseInt(currentPage) + 4 == y) {
+            break;
+          }
+      }  %>
+      <% if(currentPage != pageCount) { %>
+        <li> <a href="/admin/users/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+      <% } %>
+    </ul>
+<% } %>
+<% }else { %>
+    <h3 class="text-center">There are no Bill</h3>
+<% } %>
+
+<% include ../../_layout/footer %>
+

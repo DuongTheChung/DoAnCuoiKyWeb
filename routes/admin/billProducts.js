@@ -4,22 +4,21 @@ var router=express.Router();
 var auth=require('../../config/auth');
 var isAdmin=auth.isAdmin;
 
-
-var UserModel=require('../../models/users');
-var RoleUserModel=require('../../models/roleUsers');
-var totalUsers = 0;
+var BillProductModel=require('../../models/billProducts');
+var totalBills = 0;
 var pageSize = 4;
 var pageCount = 0;
 var start = 0;
 var currentPage = 1;
 
+//GET tat ca danh sach don hang
 router.get('/',isAdmin,(req,res)=>{
     if(req.session.errors){
       req.session.errors=null;
     }
-    UserModel.userCount().then(results=>{
-        totalUsers =results[0].count;
-        pageCount = Math.ceil(totalUsers/pageSize);
+    BillProductModel.billProductCount().then(results=>{
+        totalBills =results[0].count;
+        pageCount = Math.ceil(totalBills/pageSize);
         if (typeof req.query.page !== 'undefined') {
           currentPage = req.query.page;
         }
@@ -31,11 +30,11 @@ router.get('/',isAdmin,(req,res)=>{
             start=(currentPage - 1) * pageSize;
         }
     
-        UserModel.getAllUserPaging(start,pageSize).then(results=>{
-            res.render('admin/components/users/homeUsers',{
+        BillProductModel.getAllBillProductPaging(start,pageSize).then(results=>{
+            res.render('admin/components/billProducts/homeBillProducts',{
                 title: 'Home User',
-                totalUsers:totalUsers,       
-                users: results, 
+                totalBills:totalBills,       
+                bills: results, 
                 pageCount: pageCount, 
                 pageSize: pageSize, 
                 currentPage: currentPage
@@ -49,36 +48,29 @@ router.get('/',isAdmin,(req,res)=>{
 });
 
 //GET edit user
-router.get('/edit-user/:id',isAdmin,(req,res)=>{
+router.get('/edit-bill/:id',isAdmin,(req,res)=>{
   var errors;
   if(req.session.errors){
     errors=req.session.errors;
   }else{
     req.session.errors=null;
   }
-  RoleUserModel.getAllRoleUser().then(roles=>{
-    UserModel.findUserById(req.params.id).then(user=>{
-      res.render('admin/components/users/editUsers',{
-              title  :'Edit user',
-              id:user[0].id,
+  BillProductModel.getBillProductById(req.params.id).then(bill=>{
+      res.render('admin/components/billProducts/editBillProducts',{
+              title  :'Edit Bill',
+              id:bill[0].id,
               errors :errors,
-              roles:roles,
-              username:user[0].username,
-              status:user[0].status,
-              roleName:user[0].name
+              bill:bill,
+              status:bill[0].status,
             });
           }).catch(err=>{
             console.log(err);
-            res.redirect('/admin/users');
+            res.redirect('/admin/billproducts');
           })
-        }).catch(err=>{
-          console.log(err);
-        })
-});
+})
      
-router.post('/edit-user/:id',(req,res)=>{
+router.post('/edit-bill/:id',(req,res)=>{
   var id=req.params.id;
-  var role=req.body.role;
   var status=0;
   var checkbox=req.body.status;
   if(checkbox){
@@ -86,21 +78,15 @@ router.post('/edit-user/:id',(req,res)=>{
   }else{
     status=0;
   }
-
-  RoleUserModel.getIdRoleUserByName(role).then(result=>{
-    var user={
-      "roleId":result[0].id,
+    var bill={
       "status":status
     };
-    UserModel.updateUserByManager(user,id).then(user=>{
-      req.flash('success','User update success');
-      res.redirect('/admin/users');
+    BillProductModel.updateBillByManager(bill,id).then(bill=>{
+      req.flash('success','Bill update success');
+      res.redirect('/admin/billproducts');
     }).catch(err=>{
       console.log(err);
     });
-  }).catch(err=>{
-    console.log(err);
-  })
 });
 
 

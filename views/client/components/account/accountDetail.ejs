@@ -31,27 +31,31 @@
         <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>STT</th>
                     <th>Tên sản phẩm</th>
                     <th>Loại sản phẩm</th>
-                    <th>Nhà sản xuất</th>
                     <th>Số lượng</th>
                     <th>Ngày mua</th>
-                    <th>Tổng tiền</th>
-                    <th>Xem chi tiết</th>
+                    <th>Tổng tiền</th>      
+                    <th>Trạng thái</th>
+                    <th></th>            
                   </tr>
                 </thead>
                 <% billProducts.forEach(function(bill) { %>
                 <tbody>
                   <tr>
-                    <td><%= bill.id %></td>
                     <td><%= bill.product_name %></td>
                     <td><%= bill.category_name %></td>
-                    <td><%= bill.company_name %></td>
                     <td><%= bill.quantity %></td>
                     <td><%= bill.created_date %></td>
                     <td>$<%= bill.total_price %></td>
-                    <td><a class="btn btn-primary" href="/users/billdetail/<%= bill.id %>">Detail</a></td>
+                    <% if(bill.status==1) { %>
+                        <td style="color: green" >Đã thanh toán</td>
+                    <% }else{%>
+                        <td style="color:red" >Chưa thanh toán</td>
+                    <% } %>
+                    <td>
+                        <a class="btn btn-primary" href="/users/billdetail/<%= bill.id %>">Xem</a>
+                    </td>
                   </tr>
                 </tbody>
                 <% }); %>

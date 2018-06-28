@@ -9,7 +9,11 @@
             <p>Số lượng mua: <%= bill.quantity %></p>
             <p>Ngày mua : <%= bill.created_date %></p>
             <p>Số tiền : <%= bill.total_price %></p>
-            <p>Trạng thái :Đã thanh toán</p>
+            <% if(bill.status==1) { %>
+                <p style="color: green" >Đã thanh toán</p>
+            <% }else{%>
+                <p style="color:red" >Chưa thanh toán</p>
+            <% } %>
         </div>
     </div>
 </div>

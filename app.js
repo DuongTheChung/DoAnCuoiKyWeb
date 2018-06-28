@@ -114,11 +114,13 @@ var categoriesAdmin=require('./routes/admin/categories');
 var companyProductAdmin=require('./routes/admin/companyProducts');
 var productsAdmin=require('./routes/admin/products');
 var userAdmin=require('./routes/admin/users');
+var billProduct=require('./routes/admin/billProducts');
 app.use('/admin',admin);
 app.use('/admin/category',categoriesAdmin);
 app.use('/admin/companyproduct',companyProductAdmin);
 app.use('/admin/product',productsAdmin);
 app.use('/admin/users',userAdmin);
+app.use('/admin/billproducts',billProduct);
 
 
 //client router

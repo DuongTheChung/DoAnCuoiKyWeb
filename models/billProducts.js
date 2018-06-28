@@ -1,6 +1,18 @@
 var db=require('../config/DBConnection');
 
 
+
+exports.billProductCount = () => {
+	var sql = `select count(1) as count from bill_product`;
+	return db.load(sql);
+}
+
+exports.getAllBillProductPaging = (offset,limit) => {
+	var sql = `select* from bill_product order by created_date DESC  Limit ${offset},${limit}`;
+	return db.load(sql);
+}
+
+
 //su dung promise
 exports.addBillProduct = (billProduct) => {
 	var sql = `Insert into bill_product(userId,product_name,category_name,company_name,quantity,total_price,`
@@ -16,6 +28,11 @@ exports.getBillProductByUserId = (userId) => {
 
 exports.getBillProductById = (id) => {
 	var sql = `Select * from bill_product where id=${id}`;
+	return db.load(sql);
+}
+
+exports.updateBillByManager = (bill,id) => {
+	var sql = `update bill_product set status=${bill.status} where id=${id}`;
 	return db.save(sql);
 }
 
