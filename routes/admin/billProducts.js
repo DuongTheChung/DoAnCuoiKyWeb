@@ -2,9 +2,11 @@ var express=require('express');
 var router=express.Router();
 
 var auth=require('../../config/auth');
+
 var isAdmin=auth.isAdmin;
 
 var BillProductModel=require('../../models/billProducts');
+
 var totalBills = 0;
 var pageSize = 4;
 var pageCount = 0;
@@ -31,20 +33,20 @@ router.get('/',isAdmin,(req,res)=>{
         }
     
         BillProductModel.getAllBillProductPaging(start,pageSize).then(results=>{
-            res.render('admin/components/billProducts/homeBillProducts',{
-                title: 'Home User',
-                totalBills:totalBills,       
-                bills: results, 
-                pageCount: pageCount, 
-                pageSize: pageSize, 
-                currentPage: currentPage
-            });
+              res.render('admin/components/billProducts/homeBillProducts',{
+                  title: 'Home User',
+                  totalBills:totalBills,       
+                  bills: results, 
+                  pageCount: pageCount, 
+                  pageSize: pageSize,
+                  currentPage: currentPage
+              });
+            }).catch(err=>{
+              console.log(err);
+            })
           }).catch(err=>{
             console.log(err);
           })
-        }).catch(err=>{
-          console.log(err);
-        })
 });
 
 //GET edit user

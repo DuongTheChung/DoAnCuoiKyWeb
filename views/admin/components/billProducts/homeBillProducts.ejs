@@ -17,7 +17,7 @@
     <tbody>
         <% bills.forEach(function(b) {%>
         <tr>
-            <td><%= b.userId %></td>
+            <td><%= b.username %></td>
             <td><%= b.product_name  %></td>
             <td><%= b.quantity %></td>
             <td><%= b.total_price %>$</td>
@@ -47,20 +47,20 @@
       if(currentPage>1) {
         y = currentPage-1;
         %>
-        <li> <a href="/admin/users/?page=<%= y %>">&laquo;</a> </li>
+        <li> <a href="/admin/billproducts/?page=<%= y %>">&laquo;</a> </li>
       <% } %>
       <%  for (y; y <= pageCount; y++) {
         if(currentPage == y) { %>
             <li class="active"><span><%= y %></span></li>
         <% }else{ %>
-            <li><a href="/admin/users/?page=<%= y %>"><%= y %></a></li>
+            <li><a href="/admin/billproducts/?page=<%= y %>"><%= y %></a></li>
         <% }
           if(parseInt(currentPage) + 4 == y) {
             break;
           }
       }  %>
       <% if(currentPage != pageCount) { %>
-        <li> <a href="/admin/users/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
+        <li> <a href="/admin/billproducts/?page=<%= Math.ceil(pageCount) %>">&raquo;</a> </li>
       <% } %>
     </ul>
 <% } %>

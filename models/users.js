@@ -10,6 +10,7 @@ exports.getAllUser = () => {
 	return db.load(sql);
 }
 
+
 exports.userCount = () => {
 	var sql = `select count(1) as count from user`;
 	return db.load(sql);
