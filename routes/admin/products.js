@@ -236,7 +236,7 @@ router.post('/edit-product/:id',(req,res)=>{
       req.session.errors=errors;
       res.redirect('/admin/product/edit-product/'+id);
   }else{
-      ProductsModel.findProductByMetatitleOtherId(meta_title,id).then(results=>{
+      ProductsModel.findProductByMetatitleOtherId(id,meta_title).then(results=>{
           if(results.length>0){
             req.flash('danger','CompanyProduct already exists');
             res.redirect('/admin/product/edit-product/'+id);

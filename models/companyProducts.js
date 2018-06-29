@@ -9,7 +9,7 @@ exports.getAllCompanyProduct = () => {
 }
 
 exports.getAllCompanyProductPaging = (offset,limit) => {
-	var sql = `select * from company order by display_order Limit ${offset},${limit}`;
+	var sql = `select * from company order by created_date DESC Limit ${offset},${limit}`;
 	return db.load(sql);
 }
 

@@ -8,7 +8,7 @@ exports.billProductCount = () => {
 }
 
 exports.getAllBillProductPaging = (offset,limit) => {
-    var sql = `select bill_product.product_name as product_name,bill_product.category_name as category_name,bill_product.company_name as company_name`
+    var sql = `select bill_product.id AS id, bill_product.product_name as product_name,bill_product.category_name as category_name,bill_product.company_name as company_name`
     +`,bill_product.quantity as quantity,bill_product.total_price as total_price,bill_product.created_date as created_date,`
     +`bill_product.status as status,user.username as username from bill_product JOIN user where bill_product.userId=user.id order by created_date DESC  Limit ${offset},${limit}`;
 	return db.load(sql);

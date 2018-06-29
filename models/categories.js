@@ -6,7 +6,7 @@ exports.getAllCategory = () => {
 }
 
 exports.getAllCategoryPaging = (offset,limit) => {
-	var sql = `select * from category order by display_order Limit ${offset},${limit}`;
+	var sql = `select * from category order by created_date DESC Limit ${offset},${limit}`;
 	return db.load(sql);
 }
 

@@ -47,7 +47,7 @@ exports.getAllProductByCompany = (parent_company,offset,limit) => {
 }
 
 exports.getAllProductPaging = (offset,limit) => {
-	var sql = `select * from product order by display_order Limit ${offset},${limit}`;
+	var sql = `select * from product order by created_date DESC Limit ${offset},${limit}`;
 	return db.load(sql);
 }
 
@@ -88,7 +88,7 @@ exports.findProductByMetatitle = (meta_title) => {
 }
 
 
-exports.findProductByMetatitleOtherId = (meta_title,id) => {
+exports.findProductByMetatitleOtherId = (id,meta_title) => {
 	var sql = `select * from product where meta_title='${meta_title}' and id != ${id}`;
 	return db.load(sql);
 }
